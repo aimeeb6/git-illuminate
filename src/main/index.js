@@ -2,6 +2,8 @@ const { formatUrl } = require('url');
 const { app, BrowserWindow, dialog } = require('electron');
 const path = require('path');
 const isDevelopment = process.env.NODE_ENV !== "production";
+//import { print } from "./repo.js";
+
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow;
 
@@ -73,6 +75,7 @@ app.on('ready', () => {
 })
 
 const getRepoDir = exports.getRepoDir = (currentWindow) => {
+  //print();
     const folder = dialog.showOpenDialogSync(currentWindow, {
         properties: ["openDirectory"],
         filters: [
