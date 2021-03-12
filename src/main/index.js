@@ -2,6 +2,7 @@ const { formatUrl } = require('url');
 const { app, BrowserWindow, dialog } = require('electron');
 const path = require('path');
 const isDevelopment = process.env.NODE_ENV !== "production";
+const simpleGit = require('simple-git');
 //import { print } from "./repo.js";
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
@@ -76,18 +77,30 @@ app.on('ready', () => {
 
 const getRepoDir = exports.getRepoDir = (currentWindow) => {
   //print();
-    const folder = dialog.showOpenDialogSync(currentWindow, {
-        properties: ["openDirectory"],
-        filters: [
-            {name: 'Git Folder', extentions: ['.git']},
-    ]
+    const folderPath = dialog.showOpenDialogSync(currentWindow, {
+        properties: ["openDirectory"]
     });
     
-
-    if (folder) { openFile(folder, currentWindow); }
+    let repo = simpleGit(folderPath[0]);
+    repo.checkIsRepo().then(isRepo => {
+      console.log(isRepo)
+      if(isRepo){
+        openFile(folderPath[0], currentWindow); 
+      }else{
+        const responseOptions = {
+          type: 'question',
+          buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+          defaultId: 2,
+          title: 'Question',
+          message: 'This is not a repository. Do you want to try again?'
+        };
+        const response = dialog.showMessageBox(responseOptions);
+      }
+    })
 };
 
-const openFile = (folder, currentWindow) =>{
-  currentWindow.webContents.send('repo-opened', folder);
+const openFile = (folderPath, currentWindow) =>{
+  currentWindow.webContents.send('repo-opened', folderPath);
+  console.log(folderPath)
 };
 

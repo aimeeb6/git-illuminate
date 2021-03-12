@@ -15,11 +15,4 @@ function GitViewer(){
     )
 }
 
-ipcRenderer.on("repo-opened", (event, folder) => {
-    repoDir = folder;
-    let repo = simpleGit(folder)
-    repo.log((err, log) => console.log(log.all[0].author_email))
-});
-
-
 export default GitViewer
