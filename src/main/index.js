@@ -55,7 +55,6 @@ function createMainWindow() {
   return window
 }
 
-
 // quit application when all windows are closed
 app.on('window-all-closed', () => {
   // on macOS it is common for applications to stay open until the user explicitly quits
@@ -75,32 +74,51 @@ app.on('ready', () => {
   mainWindow = createMainWindow()
 })
 
-const getRepoDir = exports.getRepoDir = (currentWindow) => {
+const getRepoDir = exports.getRepoDir = (currentWindow, isCurrentlyARepo) => {
   //print();
     const folderPath = dialog.showOpenDialogSync(currentWindow, {
         properties: ["openDirectory"]
     });
-    
     let repo = simpleGit(folderPath[0]);
     repo.checkIsRepo().then(isRepo => {
-      console.log(isRepo)
-      if(isRepo){
-        openFile(folderPath[0], currentWindow); 
-      }else{
-        const responseOptions = {
-          type: 'question',
-          buttons: ['Cancel', 'Yes, please', 'No, thanks'],
-          defaultId: 2,
-          title: 'Question',
-          message: 'This is not a repository. Do you want to try again?'
-        };
-        const response = dialog.showMessageBox(responseOptions);
+      if(isRepo && isCurrentlyARepo){
+        //is a repo and you want it to be
+        openFile(folderPath[0], currentWindow) 
+      }else if(isRepo && !isCurrentlyARepo){
+        //its a repo and you don't want it to be
+       tryAgainDialogBox('This direactory is already a repo. Would you like to try again?', currentWindow, isCurrentlyARepo)
+      }else if(!isRepo && isCurrentlyARepo){
+        //not a repo and you want it to be
+      tryAgainDialogBox('This direactory is already not a repo. Would you like to try again?', currentWindow, isCurrentlyARepo)
+        if(response == 'yes'){
+          getRepoDir(currentWindow, isCurrentlyARepo);
+        }
+
+      }else if(!isRepo && !isCurrentlyARepo){
+        //it's not a repo and you don't want it to be
+          openFile(folderPath[0], currentWindow)
       }
-    })
+
+    });
 };
 
 const openFile = (folderPath, currentWindow) =>{
   currentWindow.webContents.send('repo-opened', folderPath);
-  console.log(folderPath)
 };
 
+const tryAgainDialogBox = (message, currentWindow, isCurrentlyARepo) => {
+  const responseOptions = {
+    type: 'question',
+    buttons: ['No', 'Yes'],
+    defaultId: 1,
+    title: 'Question',
+    message: message,
+  };
+  const response = dialog.showMessageBox(responseOptions).then(response => {
+    if(response.response == 1){
+      getRepoDir(currentWindow, isCurrentlyARepo);
+    }
+  })
+
+
+}

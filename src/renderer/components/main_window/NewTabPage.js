@@ -26,7 +26,7 @@ function NewTab(){
 
 let openRepo = () => {
     //the current window and if the folder should already contain a repo or not
-    mainProcess.getRepoDir(currentWindow, false );
+    mainProcess.getRepoDir(currentWindow, true );
 }
 
 let startRepo = () => {
