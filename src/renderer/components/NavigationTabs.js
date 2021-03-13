@@ -84,10 +84,11 @@ export default function ScrollableTabsButtonAuto() {
     }
     var newRepo = {
       path: "aimmee",
-      index: 1,
+      index: 3,
       repoName: "repoName",
     };
-    setTabs([newRepo])
+    setTabs([newRepo]);
+
     createTabBar();
   }, []);
 
@@ -105,7 +106,13 @@ export default function ScrollableTabsButtonAuto() {
     TabPanes = [];
     console.log("reached");
     for (var i = 0; i < openTabs.length; i++) {
-      Tabs.push(<Tab label={openTabs[0].repoName} {...a11yProps(i)} />);
+      Tabs.push(
+        <Tab
+          label={openTabs[0].repoName}
+          key={openTabs[0].index}
+          {...a11yProps(i)}
+        />
+      );
       TabPanes.push(
         <TabPanel value={openTabs[0].repoName} index={i}>
           <NewTab />
@@ -117,9 +124,9 @@ export default function ScrollableTabsButtonAuto() {
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
-          {openTabs.map(item => (
-              <Tab key={item.index} label={item.repoName} />
-          ))}
+        {openTabs.map((item) => (
+          <Tab key={item.index} label={item.repoName} />
+        ))}
         <Tab label="th" {...a11yProps(5)} />
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -128,6 +135,12 @@ export default function ScrollableTabsButtonAuto() {
       <TabPanel value={value} index={1}>
         <GitViewer />
       </TabPanel>
+      {openTabs.map((item) => (
+        <TabPanel key={item.index} value={item.repoName} index={item.index}>
+          <NewTab />
+          <h1>You've swtiched</h1>
+        </TabPanel>
+      ))}
     </div>
   );
 }

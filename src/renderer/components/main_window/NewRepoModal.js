@@ -11,7 +11,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from '@material-ui/core/FormLabel';
-import theme from "../Theme";
+import AppTheme from "../AppTheme";
 import { render } from "react-dom";
 import { App } from "../../App";
 const { remote } = require("electron");
@@ -42,7 +42,7 @@ export default function FormDialog() {
 
   return (
     <div>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={AppTheme}>
         <CssBaseline />
         <Dialog
           open={open}
