@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import GitViewer from "./repo-view/gitview";
 import NewTab from "./main_window/NewTabPage";
+import MainRepoView from "./repo-view/MainRepoView";
 const { ipcRenderer } = require("electron");
 const path = require("path");
 const simpleGit = require("simple-git");
@@ -56,25 +57,9 @@ export default function ScrollableTabsButtonAuto() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [openTabs, setTabs] = useState([]);
-  let Tabs = [];
-  let TabPanes = [];
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-  };
-
-  let createNewTab = (folderPath) => {
-    var newRepo = {
-      path: folderPath,
-      index: 1,
-      repoName: "repoName",
-    };
-    setTabs({
-      path: folderPath,
-      index: 1,
-      repoName: "repoName",
-    });
-    setTabs([...openTabs, newRepo]);
   };
 
   useEffect(() => {
@@ -82,63 +67,58 @@ export default function ScrollableTabsButtonAuto() {
     if (localStorage.getItem("openTabs") !== null) {
       setTabs(JSON.parse(localStorage.getItem("openTabs")));
     }
-    var newRepo = {
-      path: "aimmee",
-      index: 3,
-      repoName: "repoName",
-    };
-    setTabs([newRepo]);
-
-    createTabBar();
   }, []);
 
   useEffect(() => {
     localStorage.setItem("openTabs", JSON.stringify(openTabs));
-    createTabBar();
   }, [openTabs]);
 
   ipcRenderer.on("repo-opened", (event, folderPath) => {
     createNewTab(folderPath);
   });
 
-  let createTabBar = () => {
-    Tabs = [];
-    TabPanes = [];
-    console.log("reached");
-    for (var i = 0; i < openTabs.length; i++) {
-      Tabs.push(
-        <Tab
-          label={openTabs[0].repoName}
-          key={openTabs[0].index}
-          {...a11yProps(i)}
-        />
-      );
-      TabPanes.push(
-        <TabPanel value={openTabs[0].repoName} index={i}>
-          <NewTab />
-        </TabPanel>
-      );
+  let createNewTab = (folderPath) => {
+    let newRepo = {
+      name: folderPath.substring(folderPath.lastIndexOf("/") + 1),
+      path: folderPath,
+      index: openTabs.length + 1,
+    };
+
+    console.log(newRepo);
+
+    if (!openTabs.some((repo) => repo.path == newRepo.path)) {
+      setTabs([...openTabs, newRepo]);
+    } else {
+      alert("You already have that repo open");
     }
   };
 
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
-        {openTabs.map((item) => (
-          <Tab key={item.index} label={item.repoName} />
-        ))}
-        <Tab label="th" {...a11yProps(5)} />
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs example"
+        >
+          <Tab label="Repo Management" {...a11yProps(0)} />
+          {openTabs.map((tab) => (
+            <Tab label={tab.name} key={tab.index} {...a11yProps(tab.index)} />
+          ))}
+        </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
+        <h1>wooo</h1>
         <NewTab />
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <GitViewer />
-      </TabPanel>
-      {openTabs.map((item) => (
-        <TabPanel key={item.index} value={item.repoName} index={item.index}>
-          <NewTab />
-          <h1>You've swtiched</h1>
+      {openTabs.map((tabpanel) => (
+        <TabPanel key={tabpanel.index} value={value} index={tabpanel.index}>
+          <h1>{tabpanel.name}</h1>
+          <MainRepoView repoPath={tabpanel.path} />
         </TabPanel>
       ))}
     </div>

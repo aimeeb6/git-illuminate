@@ -36,4 +36,4 @@ render(<FormDialog />,document.getElementById('app'));
 }
 
 
-export default NewTab
+export default NewTab;
