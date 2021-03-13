@@ -80,6 +80,8 @@ const getRepoDir = exports.getRepoDir = (currentWindow, isCurrentlyARepo) => {
         properties: ["openDirectory"]
     });
     let repo = simpleGit(folderPath[0]);
+    repo.log((err, log) => console.log(JSON.stringify(log)))
+    console.log('woo');
     repo.checkIsRepo().then(isRepo => {
       if(isRepo && isCurrentlyARepo){
         //is a repo and you want it to be
