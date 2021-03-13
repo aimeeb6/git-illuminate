@@ -12,6 +12,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import importedData from './commits.json'
+import { Fragment } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 class GitGraphWidget extends React.Component {
   constructor(props) {
@@ -24,18 +27,27 @@ class GitGraphWidget extends React.Component {
     this.branchesBucket = [];
     this.nodesStore = [];
 
+    this.useStyles = makeStyles({
+      tableRow: {
+        height: 30
+      },
+      tableCell: {
+        padding: "0px 16px"
+      }
+    });
+
     this.myTemplateConfig = { // inherited from 'metro' template
       colors: ["#34b4eb", "#F85BB5", "#008fb5", "#f1c109", "#8fb500"],
       branch: {
-        lineWidth: 4,
+        lineWidth: 3,
         spacingX: 50,
         showLabel: false,
         labelRotation: 0
       },
       commit: {
-        spacingY: -40,
+        spacingY: -65,
         dot: {
-          size: 10,
+          size: 8,
         },
         message: {
           display: false,
@@ -57,14 +69,14 @@ class GitGraphWidget extends React.Component {
     alert("You clicked on commit " + commit.sha1)
   }
 
-  commitAttributes(node) {
+  commitAttributes(node, color) {
     return {
-      dotColor: "white",
-      dotSize: 4,
-      dotStrokeWidth: 8,
+      dotColor: color,
+      dotSize: 6,
+      dotStrokeWidth: 6,
       sha1: node.id,
       message: node.message,
-      //tag: node.tag,
+      tag: node.tag,
       author: node.author_name + "<" + node.author_email + ">",
       onClick: (commit) => this.onCommitSelection(commit)
     }
@@ -115,27 +127,27 @@ class GitGraphWidget extends React.Component {
     })
   }
 
+
   componentDidMount() {}
 
   render() {
+    
     return(
-      <TableContainer style={{ maxHeight: 3000 }} component={Paper}>
+      <TableContainer style={{ maxHeight: 550, maxWidth: 900 }} component={Paper}>
       <Table stickyHeader aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell> Graph</TableCell>
-            <TableCell>Tag</TableCell>
-            <TableCell>Branch</TableCell>
-            <TableCell>SHA</TableCell>
-            <TableCell>commit</TableCell>
-            <TableCell>Author</TableCell>
-            <TableCell>Date</TableCell>
+            <TableCell style={{padding: 16}}>Graph</TableCell>
+            <TableCell style={{padding: 16}}>Branch</TableCell>
+            <TableCell style={{padding: 16}}>Author</TableCell>
+            <TableCell style={{padding: 16}}>Date</TableCell>
+            <TableCell style={{padding: 16}}>SHA</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow id={'row-' + importedData[0].short_id}>
-            <TableCell  rowspan={importedData.length+2}>
-              <GitGraph
+          <TableRow style={{height:"5px"}} id={'row-' + importedData[0].short_id}>
+            <TableCell rowSpan={importedData.length} style={{ verticalAlign: 'top', padding: "4% 0px 0px 0px" }}>
+              <GitGraph style={{["--real-width"]: "150px" }}
               initializeGraph={this.initializeGraph}
               ref={(gitgraph)=>{this.gitgraph=gitgraph}}
               options={{
@@ -158,24 +170,17 @@ class GitGraphWidget extends React.Component {
   createRows = (myTemplateConfig) => {
     let table = []
     for (let i = 1; i < importedData.length; i++) {
-      table.push(<tr id={'row-' + importedData[i].short_id} style={{height:'8px'}}>{this.getCommitMessage(this.myTemplateConfig, importedData[i])}</tr>)
+      table.push(<TableRow key={i} style={{height:"7px", padding: "0"}} id={'row-' + importedData[i].short_id}>{this.getCommitMessage(this.myTemplateConfig, importedData[i], i)}</TableRow>)
     }
-    table.push(<tr style={{height:'8px'}}>{this.getCommitMessage(myTemplateConfig, null)}</tr>)
-    table.push(<tr style={{height:'8px'}}>{this.getCommitMessage(myTemplateConfig, null)}</tr>)
     return table
   }
 
-  getCommitMessage = (myTemplateConfig, commit) => {
+  getCommitMessage = (myTemplateConfig, commit, i) => {
     return [
-      <td align="left" style={{paddingTop:'0px',paddingBottom:'0px',paddingLeft:'10px',paddingRight:'3px'}}>{commit ? commit.tag ? <FaTag /> : undefined : undefined}</td>,
-      <td align="left" style={{paddingTop:'0px',paddingBottom:'0px',paddingLeft:'3px',paddingRight:'10px'}}>{commit ? commit.tag ? commit.tag : undefined : undefined}</td>,
-      <td align="left" style={{paddingTop:'0px',paddingBottom:'0px',paddingLeft:'10px',paddingRight:'3px'}}>{commit ? <FaCodeFork /> : undefined}</td>,
-      <td align="left" style={{paddingTop:'0px',paddingBottom:'0px',paddingLeft:'3px',paddingRight:'10px'}}>{commit ? '[' + commit.branch + ']' : undefined}</td>,
-      <td align="left" style={{paddingTop:'0px',paddingBottom:'0px',paddingLeft:'10px',paddingRight:'10px'}}>{commit ? commit.short_id : undefined}</td>,
-      <td align="left" style={{paddingTop:'0px',paddingBottom:'0px',paddingLeft:'10px',paddingRight:'10px'}}>{commit ? commit.title : undefined}</td>,
-      <td align="left" style={{paddingTop:'0px',paddingBottom:'0px',paddingLeft:'10px',paddingRight:'3px'}}>{commit ? <FaUser /> : undefined}</td>,
-      <td align="left" style={{paddingTop:'0px',paddingBottom:'0px',paddingLeft:'3px',paddingRight:'10px'}}>{commit ? commit.author_name + "<" + commit.author_email + ">" : undefined}</td>,
-      <td align="left" style={{paddingTop:'0px',paddingBottom:'0px',paddingLeft:'10px',paddingRight:'10px'}}>{commit ? commit.created_at : undefined}</td>
+      <TableCell>{commit ? '[' + commit.branch + ']' : undefined}</TableCell>,
+      <TableCell>{commit ?  <Fragment><FaUser /> {commit.author_name}</Fragment>: undefined}</TableCell>,
+      <TableCell>{commit ? commit.created_at : undefined}</TableCell>,
+      <TableCell>{commit ? commit.short_id : undefined}</TableCell>
     ]
   }
 
@@ -213,7 +218,7 @@ class GitGraphWidget extends React.Component {
         if (node.parentIds.length <2){
             // commit the node
             if (index === 0){
-              this.branches[actualBranchIndex].commit(this.commitAttributes(node));
+              this.branches[actualBranchIndex].commit(this.commitAttributes(node, this.myTemplateConfig.colors[actualBranchIndex]));
             } else {
                 if (this.branches[actualBranchIndex].name !== node.branch) {
 
@@ -235,7 +240,7 @@ class GitGraphWidget extends React.Component {
                     actualBranchIndex = b
                   }
                 }
-                this.branches[actualBranchIndex].commit(this.commitAttributes(node));
+                this.branches[actualBranchIndex].commit(this.commitAttributes(node, this.myTemplateConfig.colors[actualBranchIndex]));
             }
         } else {
             // find the other branch to merge to
@@ -245,7 +250,7 @@ class GitGraphWidget extends React.Component {
             // merge
             console.log("merge : "+actualBranchIndex);
             console.log("in : "+otherBranch);
-            this.branches[actualBranchIndex].merge(this.branches[otherBranch], this.commitAttributes(node));
+            this.branches[actualBranchIndex].merge(this.branches[otherBranch], this.commitAttributes(node, this.myTemplateConfig.colors[actualBranchIndex]));
             actualBranchIndex = otherBranch
             
             // make sure the resulting commit is in the actualBranch (resulting banch of the merge)

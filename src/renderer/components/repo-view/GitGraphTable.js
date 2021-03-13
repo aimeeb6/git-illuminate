@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import MuiTableCell from '@material-ui/core/TableCell';
 
 const useStyles = makeStyles({
   table: {
@@ -27,7 +28,7 @@ export default function GitGraphTable() {
   const classes = useStyles();
 
   return (
-    <TableContainer style={{ maxHeight: 300 }} component={Paper}>
+    <TableContainer style={{ maxHeight: 300 }} size="small" aria-label="a dense table" component={Paper}>
       <Table stickyHeader aria-label="simple table">
         <TableHead>
           <TableRow>

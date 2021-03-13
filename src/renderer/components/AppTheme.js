@@ -30,6 +30,16 @@ const AppTheme = createMuiTheme({
         default: "#16161F"
       }
   },
+  overrides:{
+    MuiTableCell: {
+        root: { //for the body
+            paddingTop: 0,
+            paddingBottom: 0,
+            paddingLeft: 1,
+            paddingRight: 4,
+        }
+    }
+}
 });
 
 export default AppTheme;
