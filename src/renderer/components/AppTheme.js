@@ -28,8 +28,18 @@ const AppTheme = createMuiTheme({
     },
     background: {
         default: "#16161F"
-      }
-  },
-});
+      }, 
+      
+    },
+    overrides: {
+        MuiTable:{
+            root:{
+                position:"absolute",
+                top: 0
+            }
+    }
+}
+}
+);
 
 export default AppTheme;

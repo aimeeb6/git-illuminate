@@ -36,7 +36,7 @@ class GitGraphWidget extends React.Component {
         labelRotation: 0
       },
       commit: {
-        spacingY: -40.3,
+        spacingY: -40.1,
         dot: {
           size: 2,
         },
@@ -123,7 +123,17 @@ class GitGraphWidget extends React.Component {
   render() {
     
     return(
-      <TableContainer style={{ maxHeight: 550, maxWidth: 680, }} component={Paper}>
+      <TableContainer style={{ maxHeight: 550, maxWidth: 680, position:"relative" }} component={Paper}>
+        <div id="gitGraphContainer" style={{marginTop: "10.8%"}}>
+         <GitGraph style={{ height:"130%",position:"relative", marginTop: "5%" }}
+              initializeGraph={this.initializeGraph}
+              ref={(gitgraph)=>{this.gitgraph=gitgraph}}
+              options={{
+                  template: this.myTemplateConfig,
+                  reverseArrow: false,
+                  orientation: "vertical",
+                  mode: "extended"}} />
+        </div>
       <Table stickyHeader aria-label="a dense table" size="small">
         <TableHead>
           <TableRow>
@@ -136,18 +146,6 @@ class GitGraphWidget extends React.Component {
         </TableHead>
         <TableBody>
           <TableRow style={{height:"5px"}} id={'row-' + importedData[0].short_id}>
-            <td align="center" rowSpan={importedData.length+2} style={{ verticalAlign: 'top', padding: "1.9% 0px 0px 0px", width:"20%" }}>
-              <GitGraph style={{ height:"130%" }}
-              initializeGraph={this.initializeGraph}
-              ref={(gitgraph)=>{this.gitgraph=gitgraph}}
-              options={{
-                  template: this.myTemplateConfig,
-                  reverseArrow: false,
-                  orientation: "vertical",
-                  mode: "extended"}} />
-                  
-             </td>
-                  
             {this.getCommitMessage(this.myTemplateConfig, importedData[0])}
             </TableRow>
             {this.createRows(this.myTemplateConfig)}
@@ -167,6 +165,7 @@ class GitGraphWidget extends React.Component {
 
   getCommitMessage = (myTemplateConfig, commit, i) => {
     return [
+      <td></td>,
       <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ? '[' + commit.branch + ']' : undefined}</td>,
       <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ?  <Fragment><FaUser /> {commit.author_name}</Fragment>: undefined}</td>,
       <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.created_at : undefined}</td>,
