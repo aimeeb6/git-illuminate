@@ -27,27 +27,18 @@ class GitGraphWidget extends React.Component {
     this.branchesBucket = [];
     this.nodesStore = [];
 
-    this.useStyles = makeStyles({
-      tableRow: {
-        height: 30
-      },
-      tableCell: {
-        padding: "0px 16px"
-      }
-    });
-
     this.myTemplateConfig = { // inherited from 'metro' template
       colors: ["#34b4eb", "#F85BB5", "#008fb5", "#f1c109", "#8fb500"],
       branch: {
-        lineWidth: 3,
-        spacingX: 47,
+        lineWidth: 2,
+        spacingX: 37,
         showLabel: false,
         labelRotation: 0
       },
       commit: {
-        spacingY: -79,
+        spacingY: -65,
         dot: {
-          size: 9,
+          size: 4.5,
         },
         message: {
           display: false,
@@ -133,20 +124,20 @@ class GitGraphWidget extends React.Component {
   render() {
     
     return(
-      <TableContainer style={{ maxHeight: 550, maxWidth: 900 }} component={Paper}>
+      <TableContainer style={{ maxHeight: 550, maxWidth: 900, }} component={Paper}>
       <Table stickyHeader aria-label="a dense table" size="small">
         <TableHead>
           <TableRow>
-            <TableCell style={{padding: 16}}>Graph</TableCell>
-            <TableCell style={{padding: 16}}>Branch</TableCell>
-            <TableCell style={{padding: 16}}>Author</TableCell>
-            <TableCell style={{padding: 16}}>Date</TableCell>
-            <TableCell style={{padding: 16}}>SHA</TableCell>
+            <TableCell>Graph</TableCell>
+            <TableCell>Branch</TableCell>
+            <TableCell>Author</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>SHA</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow style={{height:"5px"}} id={'row-' + importedData[0].short_id}>
-            <TableCell rowSpan={importedData.length} style={{ verticalAlign: 'top', padding: "2.5% 0px 0px 0px" }}>
+            <TableCell rowSpan={importedData.length} style={{ verticalAlign: 'top', padding: "3% 0px 0px 0px" }}>
               <GitGraph style={{ }}
               initializeGraph={this.initializeGraph}
               ref={(gitgraph)=>{this.gitgraph=gitgraph}}
