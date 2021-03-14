@@ -30,15 +30,15 @@ class GitGraphWidget extends React.Component {
     this.myTemplateConfig = { // inherited from 'metro' template
       colors: ["#34b4eb", "#F85BB5", "#008fb5", "#f1c109", "#8fb500"],
       branch: {
-        lineWidth: 2,
-        spacingX: 37,
+        lineWidth: 1,
+        spacingX: 19,
         showLabel: false,
         labelRotation: 0
       },
       commit: {
-        spacingY: -65,
+        spacingY: -40,
         dot: {
-          size: 4.5,
+          size: 2,
         },
         message: {
           display: false,
@@ -63,11 +63,10 @@ class GitGraphWidget extends React.Component {
   commitAttributes(node, color) {
     return {
       dotColor: color,
-      dotSize: 7,
-      dotStrokeWidth: 6,
+      dotSize: 5,
+      dotStrokeWidth: 3,
       sha1: node.id,
       message: node.message,
-      tag: node.tag,
       author: node.author_name + "<" + node.author_email + ">",
       onClick: (commit) => this.onCommitSelection(commit)
     }
@@ -128,17 +127,17 @@ class GitGraphWidget extends React.Component {
       <Table stickyHeader aria-label="a dense table" size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Graph</TableCell>
-            <TableCell>Branch</TableCell>
-            <TableCell>Author</TableCell>
-            <TableCell>Date</TableCell>
-            <TableCell>SHA</TableCell>
+            <TableCell align="center" style={{padding:16}}>Graph</TableCell>
+            <TableCell align="left"style={{padding:16}}>Branch</TableCell>
+            <TableCell align="left"style={{padding:16}}>Author</TableCell>
+            <TableCell align="left"style={{padding:16}}>Date</TableCell>
+            <TableCell align="left"style={{padding:16}}>SHA</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow style={{height:"5px"}} id={'row-' + importedData[0].short_id}>
-            <TableCell rowSpan={importedData.length} style={{ verticalAlign: 'top', padding: "3% 0px 0px 0px" }}>
-              <GitGraph style={{ }}
+            <td align="center" rowSpan={importedData.length+2} style={{ verticalAlign: 'top', padding: "1.7% 0px 0px 0px", width:"20%" }}>
+              <GitGraph style={{ height:"120%" }}
               initializeGraph={this.initializeGraph}
               ref={(gitgraph)=>{this.gitgraph=gitgraph}}
               options={{
@@ -147,7 +146,7 @@ class GitGraphWidget extends React.Component {
                   orientation: "vertical",
                   mode: "extended"}} />
                   
-             </TableCell>
+             </td>
                   
             {this.getCommitMessage(this.myTemplateConfig, importedData[0])}
             </TableRow>
@@ -161,17 +160,17 @@ class GitGraphWidget extends React.Component {
   createRows = (myTemplateConfig) => {
     let table = []
     for (let i = 1; i < importedData.length; i++) {
-      table.push(<TableRow key={i} style={{height:"7px", padding: "0"}} id={'row-' + importedData[i].short_id}>{this.getCommitMessage(this.myTemplateConfig, importedData[i], i)}</TableRow>)
+      table.push(<tr key={i} style={{height:"7px", padding: "0", align: "right"}} id={'row-' + importedData[i].short_id}>{this.getCommitMessage(this.myTemplateConfig, importedData[i], i)}</tr>)
     }
     return table
   }
 
   getCommitMessage = (myTemplateConfig, commit, i) => {
     return [
-      <TableCell>{commit ? '[' + commit.branch + ']' : undefined}</TableCell>,
-      <TableCell>{commit ?  <Fragment><FaUser /> {commit.author_name}</Fragment>: undefined}</TableCell>,
-      <TableCell>{commit ? commit.created_at : undefined}</TableCell>,
-      <TableCell>{commit ? commit.short_id : undefined}</TableCell>
+      <td align="right" style={{fontSize:"13px", height:40, padding:0}}>{commit ? '[' + commit.branch + ']' : undefined}</td>,
+      <td align="right" style={{fontSize:"13px", height:40, padding:0}}>{commit ?  <Fragment><FaUser /> {commit.author_name}</Fragment>: undefined}</td>,
+      <td align="right" style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.created_at : undefined}</td>,
+      <td align="right" style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.short_id: undefined}</td>,
     ]
   }
 
