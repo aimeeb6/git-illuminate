@@ -36,7 +36,7 @@ class GitGraphWidget extends React.Component {
         labelRotation: 0
       },
       commit: {
-        spacingY: -40,
+        spacingY: -40.3,
         dot: {
           size: 2,
         },
@@ -123,21 +123,21 @@ class GitGraphWidget extends React.Component {
   render() {
     
     return(
-      <TableContainer style={{ maxHeight: 550, maxWidth: 900, }} component={Paper}>
+      <TableContainer style={{ maxHeight: 550, maxWidth: 680, }} component={Paper}>
       <Table stickyHeader aria-label="a dense table" size="small">
         <TableHead>
           <TableRow>
             <TableCell align="center" style={{padding:16}}>Graph</TableCell>
-            <TableCell align="left"style={{padding:16}}>Branch</TableCell>
-            <TableCell align="left"style={{padding:16}}>Author</TableCell>
-            <TableCell align="left"style={{padding:16}}>Date</TableCell>
-            <TableCell align="left"style={{padding:16}}>SHA</TableCell>
+            <TableCell align="center"style={{padding:16}}>Branch</TableCell>
+            <TableCell align="center"style={{padding:16}}>Author</TableCell>
+            <TableCell align="center"style={{padding:16}}>Date</TableCell>
+            <TableCell align="center"style={{padding:16}}>SHA</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow style={{height:"5px"}} id={'row-' + importedData[0].short_id}>
-            <td align="center" rowSpan={importedData.length+2} style={{ verticalAlign: 'top', padding: "1.7% 0px 0px 0px", width:"20%" }}>
-              <GitGraph style={{ height:"120%" }}
+            <td align="center" rowSpan={importedData.length+2} style={{ verticalAlign: 'top', padding: "1.9% 0px 0px 0px", width:"20%" }}>
+              <GitGraph style={{ height:"130%" }}
               initializeGraph={this.initializeGraph}
               ref={(gitgraph)=>{this.gitgraph=gitgraph}}
               options={{
@@ -167,10 +167,10 @@ class GitGraphWidget extends React.Component {
 
   getCommitMessage = (myTemplateConfig, commit, i) => {
     return [
-      <td align="right" style={{fontSize:"13px", height:40, padding:0}}>{commit ? '[' + commit.branch + ']' : undefined}</td>,
-      <td align="right" style={{fontSize:"13px", height:40, padding:0}}>{commit ?  <Fragment><FaUser /> {commit.author_name}</Fragment>: undefined}</td>,
-      <td align="right" style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.created_at : undefined}</td>,
-      <td align="right" style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.short_id: undefined}</td>,
+      <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ? '[' + commit.branch + ']' : undefined}</td>,
+      <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ?  <Fragment><FaUser /> {commit.author_name}</Fragment>: undefined}</td>,
+      <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.created_at : undefined}</td>,
+      <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.short_id: undefined}</td>,
     ]
   }
 
