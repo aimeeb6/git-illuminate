@@ -35,8 +35,9 @@ const AppTheme = createMuiTheme({
         root: { //for the body
             paddingTop: 0,
             paddingBottom: 0,
-            paddingLeft: 1,
-            paddingRight: 4,
+            paddingLeft: 0,
+            paddingRight: 0,
+            lineHeight: 0,
         }
     }
 }

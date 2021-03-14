@@ -1,4 +1,0 @@
-div {
-    --real-height: 10px; /* default value */
-    height: var(--real-height) !important;
- }

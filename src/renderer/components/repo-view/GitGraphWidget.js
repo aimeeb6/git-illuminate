@@ -40,14 +40,14 @@ class GitGraphWidget extends React.Component {
       colors: ["#34b4eb", "#F85BB5", "#008fb5", "#f1c109", "#8fb500"],
       branch: {
         lineWidth: 3,
-        spacingX: 50,
+        spacingX: 47,
         showLabel: false,
         labelRotation: 0
       },
       commit: {
-        spacingY: -65,
+        spacingY: -79,
         dot: {
-          size: 8,
+          size: 9,
         },
         message: {
           display: false,
@@ -72,7 +72,7 @@ class GitGraphWidget extends React.Component {
   commitAttributes(node, color) {
     return {
       dotColor: color,
-      dotSize: 6,
+      dotSize: 7,
       dotStrokeWidth: 6,
       sha1: node.id,
       message: node.message,
@@ -134,7 +134,7 @@ class GitGraphWidget extends React.Component {
     
     return(
       <TableContainer style={{ maxHeight: 550, maxWidth: 900 }} component={Paper}>
-      <Table stickyHeader aria-label="simple table">
+      <Table stickyHeader aria-label="a dense table" size="small">
         <TableHead>
           <TableRow>
             <TableCell style={{padding: 16}}>Graph</TableCell>
@@ -146,8 +146,8 @@ class GitGraphWidget extends React.Component {
         </TableHead>
         <TableBody>
           <TableRow style={{height:"5px"}} id={'row-' + importedData[0].short_id}>
-            <TableCell rowSpan={importedData.length} style={{ verticalAlign: 'top', padding: "4% 0px 0px 0px" }}>
-              <GitGraph style={{["--real-width"]: "150px" }}
+            <TableCell rowSpan={importedData.length} style={{ verticalAlign: 'top', padding: "2.5% 0px 0px 0px" }}>
+              <GitGraph style={{ }}
               initializeGraph={this.initializeGraph}
               ref={(gitgraph)=>{this.gitgraph=gitgraph}}
               options={{
