@@ -3,8 +3,7 @@ const { app, BrowserWindow, dialog } = require('electron');
 const path = require('path');
 const isDevelopment = process.env.NODE_ENV !== "production";
 const simpleGit = require('simple-git');
-//import { print } from "./repo.js";
-
+const GitLog = require('./GitRepo');
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow;
 
@@ -72,6 +71,7 @@ app.on('activate', () => {
 // create main BrowserWindow when electron is ready
 app.on('ready', () => {
   mainWindow = createMainWindow()
+  GitLog.commits;
 })
 
 const getRepoDir = exports.getRepoDir = (currentWindow, isCurrentlyARepo) => {

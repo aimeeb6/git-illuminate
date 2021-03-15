@@ -1,9 +1,6 @@
 import React from 'react'
 import GitGraph from 'react-gitgraph'
 import _ from 'lodash'
-import FaCodeFork from 'react-icons/lib/fa/code-fork'
-import FaTag from 'react-icons/lib/fa/tag'
-import FaUser from 'react-icons/lib/fa/user'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -167,7 +164,7 @@ class GitGraphWidget extends React.Component {
     return [
       <td></td>,
       <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ? '[' + commit.branch + ']' : undefined}</td>,
-      <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ?  <Fragment><FaUser /> {commit.author_name}</Fragment>: undefined}</td>,
+      <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.author_name : undefined}</td>,
       <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.created_at : undefined}</td>,
       <td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.short_id: undefined}</td>,
     ]
