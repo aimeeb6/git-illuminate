@@ -71,7 +71,7 @@ app.on('activate', () => {
 // create main BrowserWindow when electron is ready
 app.on('ready', () => {
   mainWindow = createMainWindow()
-  GitLog.commits;
+  GitLog.commits();
 })
 
 const getRepoDir = exports.getRepoDir = (currentWindow, isCurrentlyARepo) => {
