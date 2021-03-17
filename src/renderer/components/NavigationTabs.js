@@ -113,6 +113,7 @@ export default function ScrollableTabsButtonAuto() {
       <TabPanel value={value} index={0}>
         <h1>wooo</h1>
         <NewTab />
+        <div id="graph-container"></div>
       </TabPanel>
       {openTabs.map((tabpanel) => (
         <TabPanel key={tabpanel.index} value={value} index={tabpanel.index}>

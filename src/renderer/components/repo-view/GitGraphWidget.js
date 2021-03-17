@@ -70,28 +70,6 @@ class GitGraphWidget extends React.Component {
   }
 
   initializeGraph(gitgraph) {
-//    let master = gitgraph.branch("master");
-//    master.commit(this.commitAttributes({ message: "commit #1", tag: "Initial", displayTagBox: true }))
-//    master.commit(this.commitAttributes({ message: "commit #2" }))
-//    let develop = master.branch({ parentBranch: master, name: "develop", column: 3 })
-//    master.commit(this.commitAttributes({ message: "commit #3" }))
-//    let myfeature1 = develop.branch({ parentBranch: develop, name: "myfeature1", column: 2 })
-//    let hotfix = master.branch({ parentBranch: master, name: "hotfix", column: 1 })
-//    hotfix.commit(this.commitAttributes({ message: "commit #4" }))
-//    hotfix.commit(this.commitAttributes({ message: "commit #5", tag: "v1.0.0", displayTagBox: true }))
-//    myfeature1.commit(this.commitAttributes({ message: "commit #6" }))
-//    hotfix.commit(this.commitAttributes({ message: "commit #7" }))
-//    hotfix.merge(master, this.commitAttributes({ message: "commit #8" }))
-//    hotfix.delete()
-//    myfeature1.merge(master, this.commitAttributes({ message: "commit #9" }))
-//    myfeature1.delete();
-//    master.commit(this.commitAttributes({ message: "commit #10" }))
-//    let myfeature2 = master.branch({ parentBranch: master, name: "myfeature2", column: 2 })
-//    develop.commit(this.commitAttributes({ message: "commit #11" }))
-//    myfeature2.commit(this.commitAttributes({ message: "commit #12" }))
-//    master.commit(this.commitAttributes({ message: "commit #13" }))
-//    master.commit(this.commitAttributes({ message: "commit #14" }))
-
     this.import(gitgraph)
     
     this.nodesStore.forEach((node,index) => {

@@ -3,7 +3,7 @@ const { app, BrowserWindow, dialog } = require('electron');
 const path = require('path');
 const isDevelopment = process.env.NODE_ENV !== "production";
 const simpleGit = require('simple-git');
-const GitLog = require('./GitRepo');
+const { GitRepo }  = require('./GitRepo');
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow;
 
@@ -71,7 +71,10 @@ app.on('activate', () => {
 // create main BrowserWindow when electron is ready
 app.on('ready', () => {
   mainWindow = createMainWindow()
-  GitLog.commits();
+  git = new GitRepo("/Users/aimeeboyle/Documents/UniversityWork/3rd_Year/Project/TestCode/testRepos/coursework");
+ // git.setRepo().then(() => {git.getCommits().then((commits) => {console.log(commits)} )})
+ //git.setRepo().then(() => {git.getRepoRefences().then((refdir) => {console.log(refdir['3828c25d46248d0cc8b25afb4905d26182ebf153'].length)})})
+ git.setRepo().then(() => {git.refeshRepo().then((commits) =>  {console.log(commits)})});
 })
 
 const getRepoDir = exports.getRepoDir = (currentWindow, isCurrentlyARepo) => {
