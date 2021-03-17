@@ -13,7 +13,6 @@ import GitGraphWidget from "./repo-view/GitGraphWidget";
 const { ipcRenderer } = require("electron");
 const path = require("path");
 const simpleGit = require("simple-git");
-let commitsArray = [];
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -88,7 +87,6 @@ export default function ScrollableTabsButtonAuto() {
 
     if (!openTabs.some((repo) => repo.path == newRepo.path)) {
       setTabs([...openTabs, newRepo]);
-      commitsArray = ipcRenderer.sendSync('open-repo', newRepo.path);
     } else {
       alert("You already have that repo open");
     }
@@ -121,7 +119,6 @@ export default function ScrollableTabsButtonAuto() {
         <TabPanel key={tabpanel.index} value={value} index={tabpanel.index}>
           <h1>{tabpanel.name}</h1>
           <MainRepoView repoPath={tabpanel.path} />
-          <GitGraphWidget commitsArray={commitsArray}/>
         </TabPanel>
       ))}
     </div>
