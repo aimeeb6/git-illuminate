@@ -66,7 +66,7 @@ export default function ScrollableTabsButtonAuto() {
   useEffect(() => {
     //on load get previously opened tabs
     if (localStorage.getItem("openTabs") !== null) {
-      //setTabs(JSON.parse(localStorage.getItem("openTabs")));
+      setTabs(JSON.parse(localStorage.getItem("openTabs")));
     }
   }, []);
 

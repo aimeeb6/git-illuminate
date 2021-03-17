@@ -26,10 +26,14 @@ class GitGraphWidget extends React.Component {
       colors: ['#34b4eb', '#F85BB5', '#008fb5', '#f1c109', '#8fb500'],
       branch: {
         lineWidth: 1,
-        spacing: 15,
+        spacing: 17,
         labelRotation: 0,
         label: {
-          display: false,
+          display: true,
+          borderRadius: 0,
+          bgColor:'#4f4e4c',
+          color: 'white',
+          font: '9pt roboto',
         },
       },
       tooltip: {
@@ -37,7 +41,7 @@ class GitGraphWidget extends React.Component {
       },
       commit: {
         subject: '',
-        spacing: 40,
+        spacing: 39.9,
         message: {
           displayAuthor: false,
           displayHash: false,
@@ -53,6 +57,10 @@ class GitGraphWidget extends React.Component {
           size: 5,
           strokeWidth: 6,
         },
+        tag: {
+          borderRadius: 0,
+          pointerWidth: 6,
+        },
       },
     });
   }
@@ -65,7 +73,7 @@ class GitGraphWidget extends React.Component {
 
     return (
       <TableContainer style={{ maxHeight: 550, maxWidth: 680, position:"relative" }} component={Paper}>
-        <div id="gitGraphContainer" style={{marginTop: "10%"}}>
+        <div id="gitGraphContainer" style={{marginTop: "9.5%"}}>
         <Gitgraph  options={{ 
           template: this.myTemplateConfig, 
           orientation: Orientation.Vertical }} >
@@ -107,7 +115,7 @@ class GitGraphWidget extends React.Component {
 
   getCommitMessage = (myTemplateConfig, commit, i) => {
     return [
-      <td style={{minWidth:"20%"}}></td>,
+      <td style={{paddingRight: 200}}></td>,
       <td style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.subject: undefined}</td>,
       <td style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.author.name : undefined}</td>,
       //<td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.created_at : undefined}</td>,
