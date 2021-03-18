@@ -8,11 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import NewTab from "./main_window/NewTabPage";
 import MainRepoView from "./repo-view/MainRepoView";
-import GitGraphFunction from "./repo-view/GitGraphFunction";
-import GitGraphWidget from "./repo-view/GitGraphWidget";
+import RepoButtons from './repo-view/RepoButtons';
 const { ipcRenderer } = require("electron");
 const path = require("path");
-const simpleGit = require("simple-git");
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -114,6 +112,7 @@ export default function ScrollableTabsButtonAuto() {
         <h1>wooo</h1>
         <div id="graph-container"></div>
         <NewTab/>
+        <RepoButtons/>
       </TabPanel>
       {openTabs.map((tabpanel) => (
         <TabPanel key={tabpanel.index} value={value} index={tabpanel.index}>

@@ -15,7 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import simple from './simple';
+import RepoButtons from './RepoButtons';
 
 class GitGraphWidget extends React.Component {
   constructor(props) {
@@ -73,6 +73,7 @@ class GitGraphWidget extends React.Component {
 
     return (
       <TableContainer style={{ maxHeight: 550, maxWidth: 680, position:"relative" }} component={Paper}>
+        <RepoButtons/>
         <div id="gitGraphContainer" style={{marginTop: "9.5%"}}>
         <Gitgraph  options={{ 
           template: this.myTemplateConfig, 

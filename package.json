@@ -251,11 +251,13 @@
   "dependencies": {
     "@gitgraph/react": "^1.6.0",
     "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "electron-debug": "^3.1.0",
     "electron-log": "^4.2.4",
     "electron-prebuilt": "^1.4.13",
     "electron-updater": "^4.3.4",
     "history": "^5.0.0",
+    "material-ui-icons": "^1.0.0-beta.36",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
