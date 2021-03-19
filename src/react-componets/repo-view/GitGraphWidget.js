@@ -26,7 +26,7 @@ class GitGraphWidget extends React.Component {
       colors: ['#34b4eb', '#F85BB5', '#008fb5', '#f1c109', '#8fb500'],
       branch: {
         lineWidth: 1,
-        spacing: 17,
+        spacing: 24,
         labelRotation: 0,
         label: {
           display: true,
@@ -41,7 +41,7 @@ class GitGraphWidget extends React.Component {
       },
       commit: {
         subject: '',
-        spacing: 39.9,
+        spacing: 40.3,
         message: {
           displayAuthor: false,
           displayHash: false,
@@ -72,26 +72,27 @@ class GitGraphWidget extends React.Component {
     if(this.commitsArray.length > 0){
 
     return (
-      <TableContainer style={{ maxHeight: 550, maxWidth: 680, position:"relative" }} component={Paper}>
-        <RepoButtons/>
-        <div id="gitGraphContainer" style={{marginTop: "9.5%"}}>
-        <Gitgraph  options={{ 
+      <TableContainer style={{ maxHeight: 550, maxWidth: 700, minWidth:700, minHeight:550, position:"relative", paddingRight:50 }} component={Paper}>
+        <div id="gitGraphContainer" style={{marginTop: "8%", paddingLeft:0}}>
+
+        <Gitgraph style={{}}  options={{ 
           template: this.myTemplateConfig, 
-          orientation: Orientation.Vertical }} >
+          orientation: Orientation.Vertical,
+          }} >
       {(gitgraph) => {
         // Simulate git commands with Gitgraph API.
         gitgraph.import(this.props.commitsArray);
-        
       }}
     </Gitgraph>
         </div>
       <Table stickyHeader aria-label="a dense table" size="small">
         <TableHead>
           <TableRow>
-            <TableCell style={{padding:16}}>Graph</TableCell>
-            <TableCell style={{padding:16}}>Commit Message</TableCell>
-            <TableCell style={{padding:16}}>Author</TableCell>
-            <TableCell style={{padding:16}}>SHA</TableCell>
+            <TableCell style={{padding:10}}>Graph</TableCell>
+            <TableCell style={{padding:10}}>Commit Message</TableCell>
+            <TableCell style={{padding:10}}>Author</TableCell>
+            <TableCell style={{padding:10}}>SHA</TableCell>
+            <TableCell style={{padding:10}}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -116,11 +117,12 @@ class GitGraphWidget extends React.Component {
 
   getCommitMessage = (myTemplateConfig, commit, i) => {
     return [
-      <td style={{paddingRight: 200}}></td>,
+      <td style={{paddingRight: 250}}></td>,
       <td style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.subject: undefined}</td>,
       <td style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.author.name : undefined}</td>,
       //<td align="center"style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.created_at : undefined}</td>,
       <td style={{fontSize:"13px", height:40, padding:0}}>{commit ? commit.hashAbbrev: undefined}</td>,
+      <td></td>
     ]
   }
 

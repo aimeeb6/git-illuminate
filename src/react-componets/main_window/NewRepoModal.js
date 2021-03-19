@@ -37,7 +37,7 @@ export default function FormDialog() {
   };
 
   const openFileDialog = () => {
-    ipcRenderer.send('ty', 'openFile', false);
+    //ipcRenderer.send('ty', 'openFile', false);
     //mainProcess.getRepoDir(currentWindow, false)[0];
   };
 

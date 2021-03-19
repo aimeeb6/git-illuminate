@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -8,7 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import NewTab from "./main_window/NewTabPage";
 import MainRepoView from "./repo-view/MainRepoView";
-import RepoButtons from './repo-view/RepoButtons';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 const { ipcRenderer } = require("electron");
 const path = require("path");
 
@@ -64,7 +65,7 @@ export default function ScrollableTabsButtonAuto() {
   useEffect(() => {
     //on load get previously opened tabs
     if (localStorage.getItem("openTabs") !== null) {
-      setTabs(JSON.parse(localStorage.getItem("openTabs")));
+     // setTabs(JSON.parse(localStorage.getItem("openTabs")));
     }
   }, []);
 
@@ -73,8 +74,17 @@ export default function ScrollableTabsButtonAuto() {
   }, [openTabs]);
 
   ipcRenderer.on("repo-opened", (event, folderPath) => {
-    createNewTab(folderPath);
+    if(openTabs.forEach((tab) => { tab.path == folderPath})){
+      alert("You already have that repo open");
+      return;
+    }else{
+      createNewTab(folderPath);
+    }
   });
+
+  useLayoutEffect(() => {
+    setValue(0);
+  }, [openTabs]);
 
   let createNewTab = (folderPath) => {
     let newRepo = {
@@ -85,10 +95,15 @@ export default function ScrollableTabsButtonAuto() {
 
     if (!openTabs.some((repo) => repo.path == newRepo.path)) {
       setTabs([...openTabs, newRepo]);
-    } else {
-      alert("You already have that repo open");
     }
   };
+
+  let closeTabs = (e) => {
+    let repoName = e.target.parentElement.parentElement.parentElement.innerText.toLowerCase();
+    let newarray  = openTabs.filter(function(tab){ return tab.name != repoName});
+    setTabs(newarray);
+    console.log(e.target.parentElement.parentElement.parentElement.innerText.toLowerCase());
+  }
 
   return (
     <div className={classes.root}>
@@ -104,7 +119,13 @@ export default function ScrollableTabsButtonAuto() {
         >
           <Tab label="Repo Management" {...a11yProps(0)} />
           {openTabs.map((tab) => (
-            <Tab label={tab.name} key={tab.index} {...a11yProps(tab.index)} />
+            <Tab id={tab.name} label={
+              <span>
+                {tab.name}
+              <IconButton size="small" onClick={closeTabs}>
+              <CloseIcon />
+            </IconButton>
+            </span>} key={tab.index} {...a11yProps(tab.index)}  />
           ))}
         </Tabs>
       </AppBar>
@@ -112,7 +133,6 @@ export default function ScrollableTabsButtonAuto() {
         <h1>wooo</h1>
         <div id="graph-container"></div>
         <NewTab/>
-        <RepoButtons/>
       </TabPanel>
       {openTabs.map((tabpanel) => (
         <TabPanel key={tabpanel.index} value={value} index={tabpanel.index}>

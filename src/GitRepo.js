@@ -32,7 +32,7 @@ class GitRepo {
       let repocommits = []
           var repowalker = Git.Revwalk.create(this.repo);
           repowalker.pushGlob('refs/remotes/*');
-          const commits = await repowalker.getCommitsUntil(c => true);
+          const commits = await repowalker.getCommits(500);
       commits.map((x) => {
         let cmts = {
           refs: [],

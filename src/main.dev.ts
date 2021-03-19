@@ -76,7 +76,8 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      enableBlinkFeatures: "CSSColorSchemeUARendering"
     },
   });
 
@@ -151,14 +152,12 @@ let getRepoDir = (currentWindow: any, isCurrentlyARepo : Boolean) => {
         openFile(folderPath[0], currentWindow) 
       }else if(isRepo && !isCurrentlyARepo){
         //its a repo and you don't want it to be
-       tryAgainDialogBox('This direactory is already a repo. Would you like to try again?', currentWindow, isCurrentlyARepo)
+       tryAgainDialogBox('This directory is already a repo. Would you like to try again?', currentWindow, isCurrentlyARepo);
+       return;
       }else if(!isRepo && isCurrentlyARepo){
         //not a repo and you want it to be
-      tryAgainDialogBox('This direactory is already not a repo. Would you like to try again?', currentWindow, isCurrentlyARepo)
-        if(response == 'yes'){
-          getRepoDir(currentWindow, isCurrentlyARepo);
-        }
-
+      tryAgainDialogBox('This directory is already not a repo. Would you like to try again?', currentWindow, isCurrentlyARepo);
+      return;
       }else if(!isRepo && !isCurrentlyARepo){
         //it's not a repo and you don't want it to be
           openFile(folderPath[0], currentWindow)
