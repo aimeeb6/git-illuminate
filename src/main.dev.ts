@@ -137,7 +137,7 @@ app.on('activate', () => {
   // git.setRepo().then(() => {git.getCommits().then((commits) => {console.log(commits)} )})
   //git.setRepo().then(() => {git.getRepoRefences().then((refdir) => {console.log(refdir['3828c25d46248d0cc8b25afb4905d26182ebf153'].length)})})
  //git.setRepo().then(() => {git.refeshRepo().then((commits) =>  {console.log(commits)})});
- git.setRepo().then(() => {git.getRepoStatus().then((status) =>  {console.log(status[0].isModified)})});
+ git.setRepo().then(() => {git.getRepoStatus().then((status) => {console.log(status)})});
 });
 
 

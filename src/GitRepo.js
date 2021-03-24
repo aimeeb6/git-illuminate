@@ -160,9 +160,18 @@ class GitRepo {
 };
 
 getRepoStatus(){
+  let currentStatus = [];
   if(this.repo){
-    return this.repo.getStatus();
-  }
+    return this.repo.getStatus().then((statusArray) => {
+      statusArray.forEach(status => 
+        currentStatus.push({
+        path: status.path(),
+        status: status.status(),
+        isStaged: status.inIndex() > 0? true: false,
+      }))
+      return currentStatus; 
+    });
+}
 }
 }
 

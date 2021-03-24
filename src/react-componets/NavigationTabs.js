@@ -65,7 +65,7 @@ export default function ScrollableTabsButtonAuto() {
   useEffect(() => {
     //on load get previously opened tabs
     if (localStorage.getItem("openTabs") !== null) {
-     // setTabs(JSON.parse(localStorage.getItem("openTabs")));
+      setTabs(JSON.parse(localStorage.getItem("openTabs")));
     }
   }, []);
 
@@ -75,7 +75,7 @@ export default function ScrollableTabsButtonAuto() {
 
   ipcRenderer.on("repo-opened", (event, folderPath) => {
     if(openTabs.forEach((tab) => { tab.path == folderPath})){
-      alert("You already have that repo open");
+      alert("You already have that repo open!");
       return;
     }else{
       createNewTab(folderPath);

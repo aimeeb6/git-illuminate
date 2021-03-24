@@ -82,7 +82,7 @@ export default function FormDialog() {
                   id="outlined-secondary"
                   label="Remote Link"
                   type="text"
-                  style={{ minWidth: "30vw" }}
+                  style={{ minWidth: "30vw", paddingRight: 5 }}
                 />
               ) : (
                 <div></div>
