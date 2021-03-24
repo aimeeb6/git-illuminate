@@ -13,7 +13,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from '@material-ui/core/FormLabel';
 import AppTheme from "../AppTheme";
 import { render } from "react-dom";
-import { App } from "../../App";
+import App from "../../App";
 const { remote } = require("electron");
 const { ipcRenderer } = require("electron");
 const currentWindow = remote.getCurrentWindow();
@@ -29,7 +29,7 @@ export default function FormDialog() {
 
   const handleClose = () => {
     setOpen(false);
-    render(<App />, document.getElementById("app"));
+    render(<App />, document.getElementById("root"));
   };
 
   const handleChange = () => {
@@ -63,14 +63,19 @@ export default function FormDialog() {
                 style={{ minWidth: "30vw",  }}
                 fullWidth
               />
+              <span>
+                <h4> Repo directory path</h4>
+              </span>
               <Button
               variant="outlined"
-              style={{ marginLeft: "30px", height:"45px", marginTop: "10px" }}
+              style={{ float:"right", marginLeft: "30px", height:"45px", marginTop: "10px" }}
               color="primary"
               onClick={openFileDialog}>
                 set new repo path
               </Button>
-              {checked ? (
+            </FormGroup>
+            <FormGroup row>
+            {checked ? (
                 <TextField
                   autoFocus
                   margin="dense"
@@ -83,14 +88,13 @@ export default function FormDialog() {
                 <div></div>
               )}
               <FormControlLabel
-                style={{ padding: "0 0 0 30px", marginTop: "20px" }}
+                style={{ marginTop: "20px" }}
                 control={
                   <Switch
                     id="mySwitch"
                     color="primary"
                     checked={checked}
                     onChange={handleChange}
-                    style={{ float: "right" }}
                   />
                 }
                 label="Add remote to repository"

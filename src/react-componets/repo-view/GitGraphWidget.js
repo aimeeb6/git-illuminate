@@ -34,7 +34,7 @@ class GitGraphWidget extends React.Component {
           bgColor:'#4f4e4c',
           color: 'white',
           font: '9pt roboto',
-        },
+        }
       },
       tooltip: {
         display: false,
@@ -82,6 +82,7 @@ class GitGraphWidget extends React.Component {
       {(gitgraph) => {
         // Simulate git commands with Gitgraph API.
         gitgraph.import(this.props.commitsArray);
+        //gitgraph.commit({subject:'Uncommited Changes'})
       }}
     </Gitgraph>
         </div>

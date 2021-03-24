@@ -158,6 +158,12 @@ class GitRepo {
   }
 
 };
+
+getRepoStatus(){
+  if(this.repo){
+    return this.repo.getStatus();
+  }
+}
 }
 
 ipcMain.on('open-repo', (event, arg)=> {

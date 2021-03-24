@@ -133,11 +133,13 @@ app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
-  let git = new GitRepo("/Users/aimeeboyle/Documents/UniversityWork/3rd_Year/Project/comp2811_ui_group_project");
+  let git = new GitRepo("/Users/aimeeboyle/Documents/UniversityWork/3rd_Year/Project/git-illuminate");
   // git.setRepo().then(() => {git.getCommits().then((commits) => {console.log(commits)} )})
   //git.setRepo().then(() => {git.getRepoRefences().then((refdir) => {console.log(refdir['3828c25d46248d0cc8b25afb4905d26182ebf153'].length)})})
  //git.setRepo().then(() => {git.refeshRepo().then((commits) =>  {console.log(commits)})});
+ git.setRepo().then(() => {git.getRepoStatus().then((status) =>  {console.log(status[0].isModified)})});
 });
+
 
 
 let getRepoDir = (currentWindow: any, isCurrentlyARepo : Boolean) => {

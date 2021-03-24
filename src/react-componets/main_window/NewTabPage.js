@@ -11,7 +11,7 @@ import {render} from 'react-dom';
 function NewTab(){
 
     return (
-        <div>
+        <div style={{paddingLeft: 10}}>
             <Button onClick={openRepo} variant="contained" color="primary">
                 Open a Repo
             </Button>
@@ -30,9 +30,7 @@ let openRepo = () => {
 }
 
 let startRepo = () => {
-render(<FormDialog />,document.getElementById('app'));
-
-    //mainProcess.getRepoDir(currentWindow, false );
+render(<FormDialog />,document.getElementById('root'));
 }
 
 

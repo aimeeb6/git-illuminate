@@ -130,7 +130,7 @@ export default function ScrollableTabsButtonAuto() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <h1>wooo</h1>
+        <h1>Open or create a repo from here</h1>
         <div id="graph-container"></div>
         <NewTab/>
       </TabPanel>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import GitGraphWidget from './GitGraphWidget';
 import RepoButtons from './RepoButtons';
 const { ipcRenderer } = require('electron');
 let commitsArray = [];
+
 let centerStyles = {
   display: 'flex',
   alignItems: 'center',
@@ -16,8 +17,15 @@ let columnStyle = {
   paddingTop: 2
 };
 
+
+
 function MainRepoView({ repoPath }) {
-  commitsArray = ipcRenderer.sendSync('open-repo', repoPath);
+  const [commitsArray, setCommitsArray] = useState([]);
+  const [status, setStatus] = useState([]);
+  useEffect(() => {
+    setCommitsArray(ipcRenderer.sendSync('open-repo', repoPath));
+  }, []);
+
   return (
     <div style={centerStyles}>
       <div style={columnStyle}>
