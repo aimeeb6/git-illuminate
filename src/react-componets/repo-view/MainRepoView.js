@@ -24,8 +24,9 @@ function MainRepoView({ repoPath }) {
   const [status, setStatus] = useState([]);
   useEffect(() => {
     setCommitsArray(ipcRenderer.sendSync('open-repo', repoPath));
+    console.log(ipcRenderer.sendSync('repo-status', repoPath));
   }, []);
-
+  
   return (
     <div style={centerStyles}>
       <div style={columnStyle}>
