@@ -4,7 +4,7 @@ let openRepos = {};
 
 class GitRepo {
   constructor(repoDir) {
-    this.repDir = repoDir;
+    this.repoDir = repoDir;
     this.repo = null;
   }
 
@@ -31,7 +31,7 @@ class GitRepo {
   async getCommits() {
     let repocommits = [];
     var repowalker = Git.Revwalk.create(this.repo);
-    repowalker.pushGlob('refs/remotes/*');
+    repowalker.pushGlob('refs/*');
     const commits = await repowalker.getCommits(500);
     commits.map((x) => {
       let cmts = {
@@ -167,7 +167,7 @@ class GitRepo {
               if (ref[i].isTag) {
                 commit.refs.push('tag:' + ref[i].display);
               } else {
-                commit.refs.push(ref[i].display);
+                commit.refs.push(ref[i].shorthand);
               }
             }
           }

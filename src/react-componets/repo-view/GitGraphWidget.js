@@ -26,7 +26,7 @@ class GitGraphWidget extends React.Component {
       colors: ['#34b4eb', '#F85BB5', '#008fb5', '#f1c109', '#8fb500'],
       branch: {
         lineWidth: 1,
-        spacing: 24,
+        spacing: 15,
         labelRotation: 0,
         label: {
           display: true,
@@ -41,7 +41,7 @@ class GitGraphWidget extends React.Component {
       },
       commit: {
         subject: '',
-        spacing: 40.3,
+        spacing: 40,
         message: {
           displayAuthor: false,
           displayHash: false,
