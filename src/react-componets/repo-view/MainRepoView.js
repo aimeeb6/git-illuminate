@@ -33,7 +33,7 @@ function MainRepoView({ repoPath }) {
   useEffect(() => {
     const interval = setInterval(() => {
       updateRepoView();
-    }, 5000);
+    }, 2000);
   
     return () => {
       console.log(`clearing interval`);
