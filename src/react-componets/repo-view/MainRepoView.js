@@ -22,11 +22,25 @@ let columnStyle = {
 function MainRepoView({ repoPath }) {
   const [commitsArray, setCommitsArray] = useState([]);
   const [status, setStatus] = useState([]);
+  const [currentBranch, SetCurrentBranch] = useState('');
+
+ function updateRepoView(){
+   let repoInfo = ipcRenderer.sendSync('open-repo', repoPath);
+   setCommitsArray(repoInfo.commits);
+   setStatus(repoInfo.status);
+   SetCurrentBranch(repoInfo.branch);
+ }
   useEffect(() => {
-    setCommitsArray(ipcRenderer.sendSync('open-repo', repoPath));
-    console.log(ipcRenderer.sendSync('repo-status', repoPath));
-  }, []);
+    const interval = setInterval(() => {
+      updateRepoView();
+    }, 5000);
   
+    return () => {
+      console.log(`clearing interval`);
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <div style={centerStyles}>
       <div style={columnStyle}>

@@ -156,6 +156,27 @@ class GitRepo {
     }
   }
 
+  async branchInfo() {
+    if (this.repo) {
+      const refDict = await this.getRepoRefences();
+      return this.getCommits().then((commits) => {
+        commits.forEach((commit) => {
+          let ref = refDict[commit.hash];
+          if (ref) {
+            for (let i = 0; i < ref.length; i++) {
+              if (ref[i].isTag) {
+                commit.refs.push('tag:' + ref[i].display);
+              } else {
+                commit.refs.push(ref[i].display);
+              }
+            }
+          }
+        });
+        return commits;
+      });
+    }
+  }
+
   async getRepoStatus() {
     let currentStatus = [];
     if (this.repo) {
@@ -179,35 +200,24 @@ class GitRepo {
       });
     }
   }
+
+  async refreshRepo(){
+    if (this.repo){
+      let repoInfo = {
+        commits: await this.branchInfo(),
+        currentBranch: await this.getCurrentBranch(),
+        status: await this.getRepoStatus(),
+      }
+      return repoInfo;
+    }
+  }
 }
 
 ipcMain.on('open-repo', (event, arg) => {
-  //arg[0] = repo-name arg[1] = repo-dir
   let openRepo = new GitRepo(arg);
-  openRepo.setRepo().then(() => {
-    openRepo.refeshRepo().then((commits) => {
-      event.returnValue = commits;
-    });
-  });
-});
+  let repoStatus = {};
+  openRepo.setRepo().then(() => {openRepo.refreshRepo().then((repoInfo) => {event.returnValue = repoInfo})});
 
-ipcMain.on('repo-status', (event, arg) => {
-  let openRepo = new GitRepo(arg);
-  let repoStatus = [];
-  openRepo.setRepo().then(() => {
-    openRepo
-      .getRepoStatus()
-      .then((status) => {
-        repoStatus[0] = status;
-      })
-      .then(() => {
-        openRepo.getCurrentBranch().then((branch) => {
-          repoStatus[1] = branch;
-        });
-      }).then(() => {
-        event.returnValue = repoStatus;
-      });
-  });
 });
 
 export { GitRepo };
