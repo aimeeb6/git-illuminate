@@ -9,7 +9,7 @@ class GitRepo {
   }
 
   async setRepo() {
-    const repo = await Git.Repository.open(this.repDir);
+    const repo = await Git.Repository.open(this.repoDir);
     this.repo = repo;
   }
 
@@ -211,6 +211,8 @@ class GitRepo {
       return repoInfo;
     }
   }
+
+  
 }
 
 ipcMain.on('open-repo', (event, arg) => {

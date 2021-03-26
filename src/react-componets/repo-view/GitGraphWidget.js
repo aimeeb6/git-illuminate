@@ -73,7 +73,7 @@ class GitGraphWidget extends React.Component {
 
     return (
       <TableContainer style={{ maxHeight: 550, maxWidth: 700, minWidth:700, minHeight:550, position:"relative", paddingRight:50 }} component={Paper}>
-        <div id="gitGraphContainer" style={{marginTop: "8%", paddingLeft:0}}>
+        <div id="gitGraphContainer" style={this.props.status.length > 0 ? {marginTop: "12%", paddingLeft:0} : {marginTop: "8%", paddingLeft:0}}>
 
         <Gitgraph style={{}}  options={{ 
           template: this.myTemplateConfig, 
@@ -82,7 +82,6 @@ class GitGraphWidget extends React.Component {
       {(gitgraph) => {
         // Simulate git commands with Gitgraph API.
         gitgraph.import(this.props.commitsArray);
-        //gitgraph.commit({subject:'Uncommited Changes'})
       }}
     </Gitgraph>
         </div>
@@ -97,6 +96,7 @@ class GitGraphWidget extends React.Component {
           </TableRow>
         </TableHead>
         <TableBody>
+          { this.addUncommitedChanges(this.props.status)}
           <TableRow style={{height:"5px"}} id={'row-' + this.commitsArray[0].hashAbbrev}>
             {this.getCommitMessage(this.myTemplateConfig, this.commitsArray[0])}
             </TableRow>
@@ -115,6 +115,18 @@ class GitGraphWidget extends React.Component {
     }
     return table
   }
+
+  addUncommitedChanges(status){
+    if(status.length > 0){ 
+      return [
+      <TableRow id="uncommited" style={{textAlign:"center"}}>
+        <td colSpan={5}>
+        Uncommited Changes  
+        </td>  
+      </TableRow>
+      ]
+  }
+}
 
   getCommitMessage = (myTemplateConfig, commit, i) => {
     return [

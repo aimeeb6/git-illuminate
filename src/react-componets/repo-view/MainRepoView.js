@@ -1,3 +1,4 @@
+import { ContactSupportTwoTone } from '@material-ui/icons';
 import React, {useEffect, useState} from 'react';
 import GitGraphWidget from './GitGraphWidget';
 import RepoButtons from './RepoButtons';
@@ -30,23 +31,26 @@ function MainRepoView({ repoPath }) {
    setStatus(repoInfo.status);
    SetCurrentBranch(repoInfo.branch);
  }
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      updateRepoView();
-    }, 2000);
-  
-    return () => {
-      console.log(`clearing interval`);
-      clearInterval(interval);
-    };
+    updateRepoView()
   }, []);
+
+  useEffect(() => {
+    updateRepoView()
+  }, [commitsArray]);
+
+  let eventL = (e) => {
+    console.log(e.target.parentElement.id);
+  }
+
 
   return (
     <div style={centerStyles}>
-      <div style={columnStyle}>
+      <div style={columnStyle}  onClick={eventL}>
         <RepoButtons />
         {commitsArray.length > 0 ? (
-          <GitGraphWidget commitsArray={commitsArray} />
+          <GitGraphWidget commitsArray={commitsArray} status={status}/>
         ) : (
           <h1>Loading ...</h1>
         )}
