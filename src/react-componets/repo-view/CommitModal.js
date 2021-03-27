@@ -3,37 +3,19 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 let HeadingStyle = {backgroundColor: '#16161F', paddingTop: 10, paddingBottom: 10, marginBottom:0, textAlign:"center"}
-let StagingFileStyle = {backgroundColor: '#696969', paddingTop:5, maxHeight: 140, minHeight: 140, overflow:"auto", marginTop:0}
+let StagingFileStyle = {backgroundColor: '#696969', paddingTop:5, maxHeight: 140, minHeight: 140, overflow:"auto", marginTop:0, fontSize:14}
 let CommitBoxStyle = {borderStyle:"solid", borderColor:"black", borderWidth:1, backgroundColor: '#696969',  paddingTop:5, marginBottom:20, maxHeight: 130, minHeight: 130, overflow:"none", marginTop:0}
 
-function StagingBox(){
+function StagingBox({title, files}){
 
     return(
         <div style={{marginBottom:20}}>
-            <div style={HeadingStyle}>Unstaged Changes</div>
+            <div style={HeadingStyle}>{title}</div>
             <div style={StagingFileStyle}>
-                <ul style={{paddingTop:0, paddingLeft:15, marginTop:0, listStyleType:"none"}}>
-                    <li>
-                        File one
-                    </li>
-                    <li>
-                        File two
-                    </li>
-                    <li>
-                        File one
-                    </li>
-                    <li>
-                        File two
-                    </li>
-                    <li>
-                        File one
-                    </li>
-                    <li>
-                        File two
-                    </li>
-                    <li>
-                        File one
-                    </li>
+                <ul style={{paddingTop:0, paddingLeft:20, marginTop:0}}>
+                    {files.map(file => (
+                        <li key={file.path}>{file.path}</li>
+                    ))}
                 </ul>
             </div>
         </div>
@@ -68,11 +50,13 @@ function CommitMessage(){
     )
 }
 
-function CommitModal(){
+function CommitModal({status}){
+    let stagedFiles = status.filter(status => status.isStaged);
+    let unStagedFiles = status.filter(status => !status.isStaged);
     return(
         <div style={{width:"100%"}}>
-            <StagingBox/>
-            <StagingBox/>
+            <StagingBox title="Unstaged Changes" files={unStagedFiles}/>
+            <StagingBox title="Staged Changes"  files={stagedFiles}/>
             <CommitMessage/>
         </div>
     )

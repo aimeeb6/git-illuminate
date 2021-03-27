@@ -97,7 +97,7 @@ class GitGraphWidget extends React.Component {
         </TableHead>
         <TableBody>
           { this.addUncommitedChanges(this.props.status)}
-          <TableRow style={{height:"5px"}} id={'row-' + this.commitsArray[0].hashAbbrev}>
+          <TableRow className="gitGraphRow" style={{height:"5px"}} id={'row-' + this.commitsArray[0].hashAbbrev}>
             {this.getCommitMessage(this.myTemplateConfig, this.commitsArray[0])}
             </TableRow>
             {this.createRows(this.myTemplateConfig)}
@@ -111,7 +111,7 @@ class GitGraphWidget extends React.Component {
   createRows = (myTemplateConfig) => {
     let table = []
     for (let i = 1; i < this.commitsArray.length; i++) {
-      table.push(<tr key={i + this.commitsArray[i].hashAbbrev} style={{height:"7px", padding: "0", align: "right"}} id={'row-' + this.commitsArray[i].hashAbbrev}>{this.getCommitMessage(this.myTemplateConfig, this.commitsArray[i], i)}</tr>)
+      table.push(<tr className="gitGraphRow" key={i + this.commitsArray[i].hashAbbrev} style={{height:"7px", padding: "0", align: "right"}} id={'row-' + this.commitsArray[i].hashAbbrev}>{this.getCommitMessage(this.myTemplateConfig, this.commitsArray[i], i)}</tr>)
     }
     return table
   }
@@ -119,7 +119,7 @@ class GitGraphWidget extends React.Component {
   addUncommitedChanges(status){
     if(status.length > 0){ 
       return [
-      <TableRow id="uncommited" style={{textAlign:"center"}}>
+      <TableRow className="gitGraphRow" id="uncommited" style={{textAlign:"center", backgroundColor: `rgba(${199}, ${199}, ${199}, ${.5})`}}>
         <td colSpan={5}>
         Uncommited Changes  
         </td>  
