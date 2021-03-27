@@ -21,6 +21,7 @@ class GitGraphWidget extends React.Component {
   constructor(props) {
     super(props);
     this.commitsArray = this.props.commitsArray;
+    this.commitArrayLength = this.props.commitsArray.length
     this.myTemplateConfig = templateExtend(TemplateName.Metro, {
       // inherited from 'metro' template
       colors: ['#34b4eb', '#F85BB5', '#008fb5', '#f1c109', '#8fb500'],
@@ -66,6 +67,15 @@ class GitGraphWidget extends React.Component {
   }
 
   componentDidMount() {}
+
+  shouldComponentUpdate(){
+    console.log('hrere');
+    return this.props.commitsArray.length != this.commitArrayLength;
+  }
+
+  componentDidUpdate(){
+    this.commitArrayLength = this.props.commitsArray.length;
+  }
 
   render() {
 
