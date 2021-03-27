@@ -20,8 +20,10 @@ import RepoButtons from './RepoButtons';
 class GitGraphWidget extends React.Component {
   constructor(props) {
     super(props);
-    this.commitsArray = this.props.commitsArray;
-    this.commitArrayLength = this.props.commitsArray.length
+    this.state = {
+      commitsArray: this.props.commitsArray,
+    }
+    console.log(this.state.commitsArray.length )
     this.myTemplateConfig = templateExtend(TemplateName.Metro, {
       // inherited from 'metro' template
       colors: ['#34b4eb', '#F85BB5', '#008fb5', '#f1c109', '#8fb500'],
@@ -66,20 +68,9 @@ class GitGraphWidget extends React.Component {
     });
   }
 
-  componentDidMount() {}
-
-  shouldComponentUpdate(){
-    console.log('hrere');
-    return this.props.commitsArray.length != this.commitArrayLength;
-  }
-
-  componentDidUpdate(){
-    this.commitArrayLength = this.props.commitsArray.length;
-  }
-
   render() {
 
-    if(this.commitsArray.length > 0){
+    if(this.state.commitsArray.length > 0){
 
     return (
       <TableContainer style={{ maxHeight: 550, maxWidth: 700, minWidth:700, minHeight:550, position:"relative", paddingRight:50 }} component={Paper}>
@@ -91,7 +82,7 @@ class GitGraphWidget extends React.Component {
           }} >
       {(gitgraph) => {
         // Simulate git commands with Gitgraph API.
-        gitgraph.import(this.props.commitsArray);
+        gitgraph.import(this.state.commitsArray);
       }}
     </Gitgraph>
         </div>
@@ -107,8 +98,8 @@ class GitGraphWidget extends React.Component {
         </TableHead>
         <TableBody>
           { this.addUncommitedChanges(this.props.status)}
-          <TableRow className="gitGraphRow" style={{height:"5px"}} id={'row-' + this.commitsArray[0].hashAbbrev}>
-            {this.getCommitMessage(this.myTemplateConfig, this.commitsArray[0])}
+          <TableRow className="gitGraphRow" style={{height:"5px"}} id={'row-' + this.state.commitsArray[0].hashAbbrev}>
+            {this.getCommitMessage(this.myTemplateConfig, this.state.commitsArray[0])}
             </TableRow>
             {this.createRows(this.myTemplateConfig)}
         </TableBody>
@@ -120,8 +111,8 @@ class GitGraphWidget extends React.Component {
 
   createRows = (myTemplateConfig) => {
     let table = []
-    for (let i = 1; i < this.commitsArray.length; i++) {
-      table.push(<tr className="gitGraphRow" key={i + this.commitsArray[i].hashAbbrev} style={{height:"7px", padding: "0", align: "right"}} id={'row-' + this.commitsArray[i].hashAbbrev}>{this.getCommitMessage(this.myTemplateConfig, this.commitsArray[i], i)}</tr>)
+    for (let i = 1; i < this.state.commitsArray.length; i++) {
+      table.push(<tr className="gitGraphRow" key={i + this.state.commitsArray[i].hashAbbrev} style={{height:"7px", padding: "0", align: "right"}} id={'row-' + this.state.commitsArray[i].hashAbbrev}>{this.getCommitMessage(this.myTemplateConfig, this.state.commitsArray[i], i)}</tr>)
     }
     return table
   }

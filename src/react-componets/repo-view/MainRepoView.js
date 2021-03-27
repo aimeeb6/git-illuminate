@@ -37,7 +37,7 @@ function MainRepoView({ repoPath }) {
     const interval = setInterval(() => {
       updateRepoView();
       console.log('time');
-    }, 3000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
