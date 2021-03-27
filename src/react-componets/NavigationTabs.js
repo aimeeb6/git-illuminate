@@ -71,38 +71,13 @@ export default function ScrollableTabsButtonAuto() {
 
   useEffect(() => {
     localStorage.setItem("openTabs", JSON.stringify(openTabs));
-  }, [openTabs]);
-
-  ipcRenderer.on("repo-opened", (event, folderPath) => {
-    if(openTabs.forEach((tab) => { tab.path == folderPath})){
-      alert("You already have that repo open!");
-      return;
-    }else{
-      createNewTab(folderPath);
-    }
-  });
-
-  useLayoutEffect(() => {
     setValue(0);
   }, [openTabs]);
 
-  let createNewTab = (folderPath) => {
-    let newRepo = {
-      name: folderPath.substring(folderPath.lastIndexOf("/") + 1),
-      path: folderPath,
-      index: openTabs.length + 1,
-    };
 
-    if (!openTabs.some((repo) => repo.path == newRepo.path)) {
-      setTabs([...openTabs, newRepo]);
-    }
-  };
-
-  let closeTabs = (e) => {
-    let repoName = e.target.parentElement.parentElement.parentElement.innerText.toLowerCase();
+  let closeTabs = (repoName) => {
     let newarray  = openTabs.filter(function(tab){ return tab.name != repoName});
     setTabs(newarray);
-    console.log(e.target.parentElement.parentElement.parentElement.innerText.toLowerCase());
   }
 
   return (
@@ -122,7 +97,7 @@ export default function ScrollableTabsButtonAuto() {
             <Tab id={tab.name} label={
               <span>
                 {tab.name}
-              <IconButton size="small" onClick={closeTabs}>
+              <IconButton size="small" onClick={() => closeTabs(tab.name)}>
               <CloseIcon />
             </IconButton>
             </span>} key={tab.index} {...a11yProps(tab.index)}  />
@@ -131,13 +106,11 @@ export default function ScrollableTabsButtonAuto() {
       </AppBar>
       <TabPanel value={value} index={0}>
         <h1>Open or create a repo from here</h1>
-        <div id="graph-container"></div>
-        <NewTab/>
+        <NewTab setTabs={setTabs} openTabs={openTabs}/>
       </TabPanel>
       {openTabs.map((tabpanel) => (
         <TabPanel key={tabpanel.index} value={value} index={tabpanel.index}>
           <h3>{tabpanel.name}</h3>
-          <MainRepoView repoPath={tabpanel.path} />
         </TabPanel>
       ))}
     </div>

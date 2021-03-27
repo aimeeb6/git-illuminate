@@ -119,25 +119,25 @@ app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
-  let git = new GitRepo("/Users/aimeeboyle/Documents/UniversityWork/3rd_Year/Project/git-illuminate");
+  //let git = new GitRepo("/Users/aimeeboyle/Documents/UniversityWork/3rd_Year/Project/git-illuminate");
   // git.setRepo().then(() => {git.getCommits().then((commits) => {console.log(commits)} )})
   //git.setRepo().then(() => {git.getRepoRefences().then((refdir) => {console.log(refdir['3828c25d46248d0cc8b25afb4905d26182ebf153'].length)})})
  //git.setRepo().then(() => {git.refeshRepo().then((commits) =>  {console.log(commits)})});
- git.setRepo().then(() => {git.getRepoStatus().then((status) => {console.log(status)})});
+ //git.setRepo().then(() => {git.getRepoStatus().then((status) => {console.log(status)})});
 });
 
 
 
-let getRepoDir = (currentWindow: any, isCurrentlyARepo : Boolean) => {
-  //print();
+async function getRepoDir(currentWindow: any, isCurrentlyARepo : Boolean){
     const folderPath: String[] = dialog.showOpenDialogSync(currentWindow, {
         properties: ["openDirectory"]
     });
+
     let repo = simpleGit(folderPath[0]);
-    repo.checkIsRepo().then((isRepo: Boolean) => {
+    return repo.checkIsRepo().then((isRepo: Boolean) => {
       if(isRepo && isCurrentlyARepo){
         //is a repo and you want it to be
-        openFile(folderPath[0], currentWindow) 
+        return folderPath[0];
       }else if(isRepo && !isCurrentlyARepo){
         //its a repo and you don't want it to be
        tryAgainDialogBox('This directory is already a repo. Would you like to try again?', currentWindow, isCurrentlyARepo);
@@ -148,14 +148,10 @@ let getRepoDir = (currentWindow: any, isCurrentlyARepo : Boolean) => {
       return;
       }else if(!isRepo && !isCurrentlyARepo){
         //it's not a repo and you don't want it to be
-          openFile(folderPath[0], currentWindow)
+        return folderPath[0];
       }
 
     });
-};
-
-const openFile = (folderPath: String, currentWindow) =>{
-  currentWindow.webContents.send('repo-opened', folderPath);
 };
 
 const tryAgainDialogBox = (message:String, currentWindow, isCurrentlyARepo: Boolean) => {
@@ -174,6 +170,8 @@ const tryAgainDialogBox = (message:String, currentWindow, isCurrentlyARepo: Bool
 
 }
 
-ipcMain.on('openFile', (event, arg) => {
-  getRepoDir(mainWindow, arg);
+ipcMain.on('openFile', async (event, arg) => {
+  let folderPath = await getRepoDir(mainWindow, arg);
+  event.returnValue = folderPath;
+  
 });

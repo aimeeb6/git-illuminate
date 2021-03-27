@@ -58,7 +58,7 @@ function MainRepoView({ repoPath }) {
         )}
       </div>
       <div style={{paddingLeft:"5%", minWidth:"20%", width:"25%", paddingTop:5}}>
-        <CommitModal status={status}/>
+        {status.length > 0 ? <CommitModal status={status}/> :<div></div>}
       </div>
     </div>
   );
