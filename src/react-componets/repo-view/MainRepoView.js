@@ -2,6 +2,7 @@ import { ContactSupportTwoTone } from '@material-ui/icons';
 import React, {useEffect, useState} from 'react';
 import GitGraphWidget from './GitGraphWidget';
 import RepoButtons from './RepoButtons';
+import CommitModal from './CommitModal';
 const { ipcRenderer } = require('electron');
 let commitsArray = [];
 
@@ -9,6 +10,7 @@ let centerStyles = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  overflow: 'none'
 };
 let columnStyle = {
   display: 'flex',
@@ -54,6 +56,9 @@ function MainRepoView({ repoPath }) {
         ) : (
           <h1>Loading ...</h1>
         )}
+      </div>
+      <div style={{paddingLeft:"5%", minWidth:"20%", width:"25%", paddingTop:5}}>
+        <CommitModal/>
       </div>
     </div>
   );

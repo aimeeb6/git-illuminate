@@ -111,7 +111,7 @@ class GitGraphWidget extends React.Component {
   createRows = (myTemplateConfig) => {
     let table = []
     for (let i = 1; i < this.commitsArray.length; i++) {
-      table.push(<tr key={i} style={{height:"7px", padding: "0", align: "right"}} id={'row-' + this.commitsArray[i].hashAbbrev}>{this.getCommitMessage(this.myTemplateConfig, this.commitsArray[i], i)}</tr>)
+      table.push(<tr key={i + this.commitsArray[i].hashAbbrev} style={{height:"7px", padding: "0", align: "right"}} id={'row-' + this.commitsArray[i].hashAbbrev}>{this.getCommitMessage(this.myTemplateConfig, this.commitsArray[i], i)}</tr>)
     }
     return table
   }

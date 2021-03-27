@@ -65,7 +65,7 @@ export default function ScrollableTabsButtonAuto() {
   useEffect(() => {
     //on load get previously opened tabs
     if (localStorage.getItem("openTabs") !== null) {
-      //setTabs(JSON.parse(localStorage.getItem("openTabs")));
+      setTabs(JSON.parse(localStorage.getItem("openTabs")));
     }
   }, []);
 
@@ -136,7 +136,7 @@ export default function ScrollableTabsButtonAuto() {
       </TabPanel>
       {openTabs.map((tabpanel) => (
         <TabPanel key={tabpanel.index} value={value} index={tabpanel.index}>
-          <h1>{tabpanel.name}</h1>
+          <h3>{tabpanel.name}</h3>
           <MainRepoView repoPath={tabpanel.path} />
         </TabPanel>
       ))}
