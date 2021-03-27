@@ -35,14 +35,12 @@ function MainRepoView({ repoPath }) {
  }
   useEffect(() => {
     const interval = setInterval(() => {
-      updateRepoView()
+      updateRepoView();
+      console.log('time');
     }, 3000);
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    updateRepoView()
-  }, [commitsArray]);
 
   let eventL = (e) => {
     console.log(e.target.parentElement.id);
