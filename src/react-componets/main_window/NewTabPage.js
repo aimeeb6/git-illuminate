@@ -18,8 +18,7 @@ function NewTab({setTabs, openTabs}){
     let createNewTab = (folderPath) => {
         let newRepo = {
           name: folderPath.substring(folderPath.lastIndexOf("/") + 1),
-          path: folderPath,
-          index: openTabs.length + 1,
+          path: folderPath
         };
     
         if (!openTabs.some((repo) => repo.path == newRepo.path)) {

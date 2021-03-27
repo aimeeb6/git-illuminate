@@ -69,15 +69,19 @@ export default function ScrollableTabsButtonAuto() {
     }
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("openTabs", JSON.stringify(openTabs));
+  useLayoutEffect(() => {
     setValue(0);
   }, [openTabs]);
 
+  useEffect(() => {
+    localStorage.setItem("openTabs", JSON.stringify(openTabs));
+    console.log('setItem');
+  }, [openTabs]);
 
   let closeTabs = (repoName) => {
     let newarray  = openTabs.filter(function(tab){ return tab.name != repoName});
     setTabs(newarray);
+    setValue(0); // RESET TO NEWTAB AFTER DELETE
   }
 
   return (
@@ -93,23 +97,23 @@ export default function ScrollableTabsButtonAuto() {
           aria-label="scrollable auto tabs example"
         >
           <Tab label="Repo Management" {...a11yProps(0)} />
-          {openTabs.map((tab) => (
+          {openTabs.map((tab, index) => (
             <Tab id={tab.name} label={
               <span>
                 {tab.name}
               <IconButton size="small" onClick={() => closeTabs(tab.name)}>
               <CloseIcon />
             </IconButton>
-            </span>} key={tab.index} {...a11yProps(tab.index)}  />
+            </span>} key={index} {...a11yProps(index)}  />
           ))}
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         <h1>Open or create a repo from here</h1>
-        <NewTab setTabs={setTabs} openTabs={openTabs}/>
+        <NewTab setTabs={setTabs} openTabs={openTabs} />
       </TabPanel>
-      {openTabs.map((tabpanel) => (
-        <TabPanel key={tabpanel.index} value={value} index={tabpanel.index}>
+      {openTabs.map((tabpanel, index) => (
+        <TabPanel key={index} value={value} index={index + 1}>
           <h3>{tabpanel.name}</h3>
         </TabPanel>
       ))}
