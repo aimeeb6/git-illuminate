@@ -68,6 +68,17 @@ class GitGraphWidget extends React.Component {
     });
   }
 
+  shouldComponentUpdate(){
+    console.log(this.props.commitsArray.length)
+    console.log(this.state.commitsArray.length)
+    return (this.props.commitsArray.length != this.state.commitsArray.length)
+  }
+
+  componentDidUpdate(){
+    this.setState((state, props) => {commitsArray: this.props.commitsArray})
+    console.log('thos')
+  }
+
   render() {
 
     if(this.state.commitsArray.length > 0){
