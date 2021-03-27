@@ -10,10 +10,12 @@ function NewTab({setTabs, openTabs}){
     let openRepo = () => {
         //the current window and if the folder should already contain a repo or not
         //getRepoDir(currentWindow, true );
-        console.log('ll');
-        let folderPath = ipcRenderer.sendSync('openFile', true);
-        createNewTab(folderPath);
+        ipcRenderer.send('openFile', true);
     }
+
+    ipcRenderer.on('repo-opened', (event , folderPath) => {
+        createNewTab(folderPath);
+    });
 
     let createNewTab = (folderPath) => {
         let newRepo = {

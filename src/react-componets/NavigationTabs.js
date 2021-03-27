@@ -75,7 +75,6 @@ export default function ScrollableTabsButtonAuto() {
 
   useEffect(() => {
     localStorage.setItem("openTabs", JSON.stringify(openTabs));
-    console.log('setItem');
   }, [openTabs]);
 
   let closeTabs = (repoName) => {
@@ -115,6 +114,7 @@ export default function ScrollableTabsButtonAuto() {
       {openTabs.map((tabpanel, index) => (
         <TabPanel key={index} value={value} index={index + 1}>
           <h3>{tabpanel.name}</h3>
+          <MainRepoView repoPath={tabpanel.path} />
         </TabPanel>
       ))}
     </div>
