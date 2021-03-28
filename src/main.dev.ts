@@ -8,16 +8,20 @@
  * When running `yarn build` or `yarn build-main`, this file is compiled to
  * `./src/main.prod.js` using webpack. This gives us some performance wins.
  */
- import 'core-js/stable';
- import 'regenerator-runtime/runtime';
- import path from 'path';
- import { app, BrowserWindow, shell, dialog } from 'electron';
- import { autoUpdater } from 'electron-updater';
- import log from 'electron-log';
- import MenuBuilder from './menu';
- import { GitRepo } from "./GitRepo";
- const { ipcMain } = require('electron');
- const simpleGit = require('simple-git');
+
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+import path from 'path';
+import { app, BrowserWindow, dialog } from 'electron';
+import { autoUpdater } from 'electron-updater';
+import log from 'electron-log';
+import MenuBuilder from './menu';
+import { GitRepo } from "./GitRepo";
+const { ipcMain } = require('electron');
+const simpleGit = require('simple-git');
+const pty = require("node-pty");
+const os = require("os");
+var shell = os.platform() === "win32" ? "powershell.exe" : "bash";
  export default class AppUpdater {
    constructor() {
      log.transports.file.level = 'info';
@@ -99,6 +103,28 @@
    // Remove this if your app does not use auto updates
    // eslint-disable-next-line
    new AppUpdater();
+
+
+   var ptyProcess = pty.spawn(shell, [], {
+    name: "xterm-color",
+    cols: 80,
+    rows: 30,
+    cwd: process.env.HOME,
+    env: process.env
+});
+
+ptyProcess.on('data', function(data) {
+  console.log('Data: ', data)
+    mainWindow.webContents.send("terminal.incomingData", data);
+});
+
+ipcMain.on("terminal.keystroke", (event, key) => {
+  console.log('key ', key)
+  ptyProcess.write(key)
+});
+
+
+
  };
  
  /**

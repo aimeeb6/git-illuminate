@@ -1,0 +1,6 @@
+.react-terminal-wrapper {
+    width: 100%;
+    font-size: 15px;
+    overflow: hidden;
+    max-height: 100%;
+}

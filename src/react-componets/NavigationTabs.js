@@ -114,7 +114,6 @@ export default function ScrollableTabsButtonAuto() {
       </TabPanel>
       {openTabs.map((tabpanel, index) => (
         <TabPanel key={index} value={value} index={index + 1}>
-          <h3>{tabpanel.name}</h3>
           <MainRepoView repoPath={tabpanel.path} />
         </TabPanel>
       ))}

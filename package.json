@@ -257,13 +257,19 @@
     "electron-prebuilt": "^1.4.13",
     "electron-updater": "^4.3.4",
     "history": "^5.0.0",
+    "javascript-terminal": "^1.1.1",
     "material-ui-icons": "^1.0.0-beta.36",
+    "node-pty": "^0.10.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
+    "react-terminal-component": "^1.5.0",
+    "react-terminal-ui": "^0.1.10",
     "regenerator-runtime": "^0.13.5",
     "simple-git": "^2.37.0",
-    "source-map-support": "^0.5.19"
+    "source-map-support": "^0.5.19",
+    "xterm": "^4.11.0",
+    "xterm-addon-fit": "^0.5.0"
   },
   "devEngines": {
     "node": ">=10.x",
