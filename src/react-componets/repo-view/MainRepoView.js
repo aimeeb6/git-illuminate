@@ -1,5 +1,5 @@
 import { ContactSupportTwoTone } from '@material-ui/icons';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect,useLayoutEffect, useState} from 'react';
 import GitGraphWidget from './GitGraphWidget';
 import RepoButtons from './RepoButtons';
 import CommitModal from './CommitModal';
@@ -34,13 +34,14 @@ function MainRepoView({ repoPath }) {
    SetCurrentBranch(repoInfo.branch);
  }
   useEffect(() => {
-    updateRepoView();
     const interval = setInterval(() => {
       updateRepoView();
     }, 3000);
     return () => clearInterval(interval);
   }, []);
 
+  useLayoutEffect(() => {
+  }, [status, commitsArray]);
 
 
 
