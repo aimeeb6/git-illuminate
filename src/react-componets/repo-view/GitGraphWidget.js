@@ -69,13 +69,8 @@ class GitGraphWidget extends React.Component {
   }
 
   shouldComponentUpdate(){
-    console.log(this.props.status.length)
-    console.log(this.state.status.length)
     let shouldStatusUpdate = (this.props.status.length != this.state.status.length)
     let shouldCommitsUpdate = (this.props.commitsArray.length != this.state.commitsArray.length)
-    console.log(shouldStatusUpdate)
-    console.log(shouldCommitsUpdate)
-    console.log((shouldStatusUpdate || shouldCommitsUpdate))
     return (shouldStatusUpdate || shouldCommitsUpdate)
   }
 
