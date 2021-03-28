@@ -46,7 +46,15 @@ function MainRepoView({ repoPath }) {
   };
 
   return (
-    <div>
+    <div 
+    style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'none',
+    flexDirection:'column'
+    }}>
+
       <div style={centerStyles} id="commit-graph-div">
         <div style={columnStyle} onClick={eventL}>
           <RepoButtons />
@@ -67,7 +75,7 @@ function MainRepoView({ repoPath }) {
           {status.length > 0 ? <CommitModal status={status} /> : <div></div>}
         </div>
       </div>
-      <div id="terminal-div" style={{paddingTop: 20, maxHeight:350, width:"60%"}}>
+      <div id="terminal-div" style={{paddingTop: 20, maxHeight:350, width:"80%"}}>
         <TerminalComponent repoPath={repoPath}/>
       </div>
     </div>

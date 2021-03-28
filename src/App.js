@@ -11,7 +11,7 @@ const { Gitgraph } = require('@gitgraph/react');
 function App() {
   return (
     
-    <div>
+    <div style={{overflow: "none"}}>
     <ThemeProvider theme={AppTheme}>
     <CssBaseline />
       <ScrollableTabsButtonAuto />

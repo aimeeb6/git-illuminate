@@ -36,10 +36,10 @@ function NewTab({setTabs, openTabs}){
 
     return (
         <div style={{paddingLeft: 10}}>
-            <Button onClick={openRepo} variant="contained" color="primary">
+            <Button  onClick={openRepo} variant="contained" color="primary">
                 Open a Repo
             </Button>
-            <Button onClick={startRepo} variant="contained" color="primary">
+            <Button style={{marginLeft:10}} onClick={startRepo} variant="contained" color="primary">
             Start a Repo
             </Button>
         </div>

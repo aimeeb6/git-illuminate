@@ -4,6 +4,7 @@ import  style from "./style.css"
 const { ipcRenderer } = require('electron');
 
 function TerminalComponent({ repoPath }) {
+  let needListener = true;
   const [terminalLineData, setTerminalLineData] = useState([
     {
       type: LineType.Output,
@@ -21,47 +22,42 @@ function TerminalComponent({ repoPath }) {
     console.log(terminalLineData);
     ipcRenderer.send('terminal.keystroke', terminalInput);
     ipcRenderer.send('terminal.keystroke', '\n');
-    ipcRenderer.on('terminal.incomingData', (event, data) => {
-      validateData(data)
-    })
-    
+    createlistener();
   };
+
+  let createlistener = () =>{
+    if(needListener){
+      ipcRenderer.on('terminal.incomingData', (event, data) => {
+        console.log(data);
+        validateData(data)
+        needListener = !needListener;
+      })
+    }
+  }
 
   useEffect(() => {
     onDataEntry(`cd ${repoPath}`);
     onDataEntry(`git status`);
-    let terminalDiv = document.getElementsByClassName('re')
   }, []);
 
   useEffect(() => {}, [terminalLineData]);
 
   let validateData = (data) => {
+    console.log(ipcRenderer.rawListeners('terminal.incomingData').length)
     let bashIndex = data.indexOf('bash-3.2$'); // specifc to macbook
     if (bashIndex == -1) {
-      data = data;
-    } else {
-      data = data.substring(0, bashIndex);
-    }
+      let dataLines = data.split('\n');
+      for(let i = 0; i < dataLines.length; i++){
+       let newArray = terminalLineData;
+       if(newArray == terminalLineData[terminalLineData.length - 1]){
 
-    if (!(data == '' || data == '\n' || data == '\r')) {
-      let previousValue = terminalLineData[terminalLineData.length - 1].value;
-      if (data != previousValue) {
-        if(data.includes('\n')){
-           let dataLines = data.split('\n');
-           for(let i = 0; i < dataLines.length; i++){
-            let newArray = terminalLineData;
-            newArray.push({ type: 1, value: dataLines[i] });
-            setTerminalLineData(newArray);
-           }
-        }else{
-            let newArray = terminalLineData;
-            newArray.push({ type: 1, value: data });
-            setTerminalLineData(newArray);
-        }
+       }else{
+       newArray.push({ type: 1, value: dataLines[i] });
+       setTerminalLineData(newArray);
       }
     }
   }
-  
+}
 
   return (
       <Terminal
