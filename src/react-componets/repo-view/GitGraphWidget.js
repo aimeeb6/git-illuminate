@@ -22,6 +22,7 @@ class GitGraphWidget extends React.Component {
     super(props);
     this.state = {
       commitsArray: this.props.commitsArray,
+      status: this.props.status,
     }
     this.myTemplateConfig = templateExtend(TemplateName.Metro, {
       // inherited from 'metro' template
@@ -68,6 +69,8 @@ class GitGraphWidget extends React.Component {
   }
 
   shouldComponentUpdate(){
+    console.log(this.props.status.length)
+    console.log(this.state.status.length)
     return (this.props.commitsArray.length != this.state.commitsArray.length)
   }
 
@@ -81,7 +84,7 @@ class GitGraphWidget extends React.Component {
 
     return (
       <TableContainer style={{ maxHeight: 550, maxWidth: 700, minWidth:700, minHeight:550, position:"relative", paddingRight:50 }} component={Paper}>
-        <div id="gitGraphContainer" style={this.props.status.length > 0 ? {marginTop: "12%", paddingLeft:0} : {marginTop: "8%", paddingLeft:0}}>
+        <div id="gitGraphContainer" style={this.state.status.length > 0 ? {marginTop: "12%", paddingLeft:0} : {marginTop: "8%", paddingLeft:0}}>
 
         <Gitgraph style={{}}  options={{ 
           template: this.myTemplateConfig, 
@@ -104,7 +107,7 @@ class GitGraphWidget extends React.Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          { this.addUncommitedChanges(this.props.status)}
+          { this.addUncommitedChanges(this.state.status)}
           <TableRow className="gitGraphRow" style={{height:"5px"}} id={'row-' + this.state.commitsArray[0].hashAbbrev}>
             {this.getCommitMessage(this.myTemplateConfig, this.state.commitsArray[0])}
             </TableRow>
