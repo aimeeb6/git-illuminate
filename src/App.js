@@ -10,6 +10,7 @@ const { Gitgraph } = require('@gitgraph/react');
 
 function App() {
   return (
+    
     <div>
     <ThemeProvider theme={AppTheme}>
     <CssBaseline />

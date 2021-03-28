@@ -34,11 +34,14 @@ function MainRepoView({ repoPath }) {
    SetCurrentBranch(repoInfo.branch);
  }
   useEffect(() => {
+    updateRepoView();
     const interval = setInterval(() => {
       updateRepoView();
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+
 
 
   let eventL = (e) => {

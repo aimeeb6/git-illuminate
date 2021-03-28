@@ -1,4 +1,5 @@
 import React from "react";
+import { render } from 'react-dom';
 import Button from '@material-ui/core/Button';
 import FormDialog from './NewRepoModal'
 const { remote } = require('electron');

@@ -83,6 +83,7 @@ export default function ScrollableTabsButtonAuto() {
     setValue(0); // RESET TO NEWTAB AFTER DELETE
   }
 
+  
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
