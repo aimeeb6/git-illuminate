@@ -67,7 +67,7 @@ function MainRepoView({ repoPath }) {
           {status.length > 0 ? <CommitModal status={status} /> : <div></div>}
         </div>
       </div>
-      <div id="terminal-div" style={{paddingTop: 50}}>
+      <div id="terminal-div" style={{paddingTop: 20, maxHeight:350, width:"60%"}}>
         <TerminalComponent repoPath={repoPath}/>
       </div>
     </div>

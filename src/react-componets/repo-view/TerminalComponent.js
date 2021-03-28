@@ -21,6 +21,10 @@ function TerminalComponent({ repoPath }) {
     console.log(terminalLineData);
     ipcRenderer.send('terminal.keystroke', terminalInput);
     ipcRenderer.send('terminal.keystroke', '\n');
+    ipcRenderer.on('terminal.incomingData', (event, data) => {
+      validateData(data)
+    })
+    
   };
 
   useEffect(() => {
@@ -31,7 +35,7 @@ function TerminalComponent({ repoPath }) {
 
   useEffect(() => {}, [terminalLineData]);
 
-  ipcRenderer.on('terminal.incomingData', (event, data) => {
+  let validateData = (data) => {
     let bashIndex = data.indexOf('bash-3.2$'); // specifc to macbook
     if (bashIndex == -1) {
       data = data;
@@ -41,16 +45,23 @@ function TerminalComponent({ repoPath }) {
 
     if (!(data == '' || data == '\n' || data == '\r')) {
       let previousValue = terminalLineData[terminalLineData.length - 1].value;
-      console.log(terminalLineData);
-      console.log(previousValue);
       if (data != previousValue) {
-        var text = data.replace(/\s/g, '&nbsp;');
-        let newArray = terminalLineData;
-        newArray.push({ type: 1, value: data });
-        setTerminalLineData(newArray);
+        if(data.includes('\n')){
+           let dataLines = data.split('\n');
+           for(let i = 0; i < dataLines.length; i++){
+            let newArray = terminalLineData;
+            newArray.push({ type: 1, value: dataLines[i] });
+            setTerminalLineData(newArray);
+           }
+        }else{
+            let newArray = terminalLineData;
+            newArray.push({ type: 1, value: data });
+            setTerminalLineData(newArray);
+        }
       }
     }
-  });
+  }
+  
 
   return (
       <Terminal
