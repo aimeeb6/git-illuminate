@@ -2,15 +2,15 @@ import React from 'react';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-let HeadingStyle = {backgroundColor: '#16161F', paddingTop: 10, paddingBottom: 10, marginBottom:0, textAlign:"center"}
+let HeadingStyle = {backgroundColor: '#16161F', paddingTop: 10, paddingBottom: 10, marginBottom:0, textAlign:"center", display:"flex", paddingLeft:2, alignItems:"center", justifyContent:"center",}
 let StagingFileStyle = {backgroundColor: '#696969', paddingTop:5, maxHeight: 140, minHeight: 140, overflow:"auto", marginTop:0, fontSize:14}
 let CommitBoxStyle = {borderStyle:"solid", borderColor:"black", borderWidth:1, backgroundColor: '#696969',  paddingTop:5, marginBottom:20, maxHeight: 110, minHeight: 110, overflow:"none", marginTop:0}
 
-function StagingBox({title, files}){
-
+function StagingBox({title, files, buttonTitle, buttonFunction}){
+    let value = buttonTitle;
     return(
         <div style={{marginBottom:20}}>
-            <div style={HeadingStyle}>{title}</div>
+            <div style={HeadingStyle}>{title} <Button style={{marginLeft:10}} onClick={() => {buttonFunction(value)}} variant="outlined" color="secondary">{buttonTitle}</Button></div>
             <div style={StagingFileStyle}>
                 <ul style={{paddingTop:0, paddingLeft:20, marginTop:0}}>
                     {files.map(file => (
@@ -50,13 +50,13 @@ function CommitMessage(){
     )
 }
 
-function CommitModal({status}){
+function CommitModal({status, ButtonPress}){
     let stagedFiles = status.filter(status => status.isStaged);
     let unStagedFiles = status.filter(status => !status.isStaged);
     return(
         <div style={{width:"100%"}}>
-            <StagingBox title="Unstaged Changes" files={unStagedFiles}/>
-            <StagingBox title="Staged Changes"  files={stagedFiles}/>
+            <StagingBox title="Unstaged Changes" files={unStagedFiles} buttonFunction={ButtonPress} buttonTitle="Stage All"/>
+            <StagingBox title="Staged Changes"  files={stagedFiles} buttonFunction={ButtonPress} buttonTitle="Unstage All" />
             <CommitMessage/>
         </div>
     )

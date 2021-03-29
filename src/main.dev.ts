@@ -114,12 +114,12 @@ var shell = os.platform() === "win32" ? "powershell.exe" : "bash";
 });
 
 ptyProcess.on('data', function(data) {
-  console.log('Data: ', data)
+ // console.log('Data: ', data)
     mainWindow.webContents.send("terminal.incomingData", data);
 });
 
 ipcMain.on("terminal.keystroke", (event, key) => {
-  console.log('key ', key)
+  //console.log('key ', key)
   ptyProcess.write(key)
 });
 

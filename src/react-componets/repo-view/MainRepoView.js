@@ -43,6 +43,15 @@ function MainRepoView({ repoPath }) {
     if(gitcommand == 'stash'){
       setCommand(' stash')
     }
+
+    if(gitcommand == 'Stage All'){
+      setCommand(' add .')
+    }
+
+    if(gitcommand == 'Unstage All'){
+      setCommand(' reset')
+    }
+    console.log(gitcommand);
   }
 
   function updateRepoView() {
@@ -88,12 +97,12 @@ function MainRepoView({ repoPath }) {
         <div
           style={{
             paddingLeft: '5%',
-            minWidth: '20%',
-            width: '25%',
+            minWidth: '25%',
+            width: '30%',
             paddingTop: 5,
           }}
         >
-          {status.length > 0 ? <CommitModal status={status} /> : <div></div>}
+          {status.length > 0 ? <CommitModal ButtonPress={RepoButtonPress} status={status} /> : <div></div>}
         </div>
       </div>
       <div id="terminal-div" style={{paddingTop: 20, maxHeight:350, width:"80%"}}>
