@@ -3,7 +3,7 @@ import Terminal, { ColorMode, LineType } from 'react-terminal-ui';
 import  style from "./style.css"
 const { ipcRenderer } = require('electron');
 
-function TerminalComponent({ repoPath }) {
+function TerminalComponent({ repoPath, currentCommand, setCommand }) {
   let needListener = true;
   const [terminalLineData, setTerminalLineData] = useState([
     {
@@ -38,6 +38,13 @@ function TerminalComponent({ repoPath }) {
   }, []);
 
   useEffect(() => {}, [terminalLineData]);
+
+  useEffect(() => {
+    if(currentCommand != ''){
+      onDataEntry(`git ${currentCommand}`);
+    }
+    setCommand('')
+  }, [currentCommand]);
 
   let validateData = (data) => {
     console.log(ipcRenderer.rawListeners('terminal.incomingData').length)

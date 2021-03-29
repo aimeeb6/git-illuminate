@@ -25,6 +25,25 @@ function MainRepoView({ repoPath }) {
   const [commitsArray, setCommitsArray] = useState([]);
   const [status, setStatus] = useState([]);
   const [currentBranch, SetCurrentBranch] = useState('');
+  const [currentCommand, setCommand] = useState('');
+
+  function RepoButtonPress(gitcommand){
+    if(gitcommand == 'fetch'){
+      setCommand(' fetch --all')
+    }
+
+    if(gitcommand == 'pull'){
+      setCommand(' pull')
+    }
+
+    if(gitcommand == 'push'){
+      setCommand(' push')
+    }
+
+    if(gitcommand == 'stash'){
+      setCommand(' stash')
+    }
+  }
 
   function updateRepoView() {
     let repoInfo = ipcRenderer.sendSync('open-repo', repoPath);
@@ -59,7 +78,7 @@ function MainRepoView({ repoPath }) {
 
       <div style={centerStyles} id="commit-graph-div">
         <div style={columnStyle} onClick={eventL}>
-          <RepoButtons />
+          <RepoButtons RepoButtonPress={RepoButtonPress} />
           {commitsArray.length > 0 ? (
             <GitGraphWidget commitsArray={commitsArray} status={status} />
           ) : (
@@ -78,7 +97,7 @@ function MainRepoView({ repoPath }) {
         </div>
       </div>
       <div id="terminal-div" style={{paddingTop: 20, maxHeight:350, width:"80%"}}>
-        <TerminalComponent repoPath={repoPath}/>
+        <TerminalComponent repoPath={repoPath} currentCommand={currentCommand}  setCommand={setCommand}  />
       </div>
     </div>
   );

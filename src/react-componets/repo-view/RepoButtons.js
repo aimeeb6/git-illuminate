@@ -18,7 +18,7 @@ const buttonStyle = {
   textTransform: 'capitalize',
 };
 
-function RepoButtons() {
+function RepoButtons({RepoButtonPress}) {
   return (
     <div
       style={{
@@ -28,25 +28,25 @@ function RepoButtons() {
         height: "5%"
       }}
     >
-      <Button variant="outlined" style={{ padding: 0, width: '10%' }}>
+      <Button onClick={() => RepoButtonPress('fetch')} variant="outlined" style={{ padding: 0, width: '10%' }}>
         <div style={buttonStyle}>
           <ImportExportIcon fontSize="default" />
           Fetch
         </div>
       </Button>
-      <Button variant="outlined" style={{ padding: 0, width: '10%' }}>
+      <Button onClick={() => RepoButtonPress('pull')} variant="outlined" style={{ padding: 0, width: '10%' }}>
         <div style={buttonStyle}>
           <ArrowDownwardIcon fontSize="default" />
           Pull
         </div>
       </Button>
-      <Button variant="outlined" style={{ padding: 0, width: '10%' }}>
+      <Button onClick={() => RepoButtonPress('push')} variant="outlined" style={{ padding: 0, width: '10%' }}>
         <div style={buttonStyle}>
           <ArrowUpwardIcon fontSize="default" />
           Push
         </div>
       </Button>
-      <Button variant="outlined" style={{ padding: 0, width: '10%' }}>
+      <Button onClick={() => RepoButtonPress('stash')} variant="outlined" style={{ padding: 0, width: '10%' }}>
         <div style={buttonStyle}>
           <MoveToInboxIcon fontSize="default" />
           Stash
