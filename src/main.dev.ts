@@ -114,12 +114,12 @@ var shell = os.platform() === "win32" ? "powershell.exe" : "bash";
 });
 
 ptyProcess.on('data', function(data) {
-  console.log('Data: ', data)
+ // console.log('Data: ', data)
     mainWindow.webContents.send("terminal.incomingData", data);
 });
 
 ipcMain.on("terminal.keystroke", (event, key) => {
-  console.log('key ', key)
+  //console.log('key ', key)
   ptyProcess.write(key)
 });
 
@@ -170,7 +170,7 @@ ipcMain.on("terminal.keystroke", (event, key) => {
         return;
        }else if(!isRepo && isCurrentlyARepo){
          //not a repo and you want it to be
-       tryAgainDialogBox('This directory is already not a repo. Would you like to try again?', currentWindow, isCurrentlyARepo);
+       tryAgainDialogBox('This directory is not a repo. Would you like to try again?', currentWindow, isCurrentlyARepo);
        return;
        }else if(!isRepo && !isCurrentlyARepo){
          //it's not a repo and you don't want it to be

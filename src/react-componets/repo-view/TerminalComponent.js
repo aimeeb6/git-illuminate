@@ -37,9 +37,19 @@ function TerminalComponent({ repoPath, currentCommand, setCommand }) {
     onDataEntry(`git status`);
   }, []);
 
-  useEffect(() => {}, [terminalLineData]);
+  useEffect(() => {
+    let listener = ipcRenderer.rawListeners('terminal.incomingData').length
+  if(listener == 0){
+    ipcRenderer.on('terminal.incomingData', (event, data) => {
+      console.log(data, listener);
+      validateData(data)
+    })
+  }
+
+  }, [terminalLineData]);
 
   useEffect(() => {
+    
     if(currentCommand != ''){
       onDataEntry(`git ${currentCommand}`);
     }
@@ -49,6 +59,7 @@ function TerminalComponent({ repoPath, currentCommand, setCommand }) {
   let validateData = (data) => {
     console.log(ipcRenderer.rawListeners('terminal.incomingData').length)
     data = data.replace("[32m", "\n");
+    data = data.replace("31m", "\n");
     data = data.replace("[m", "\n");
     data = data.replace(RegExp(String.fromCharCode(32)),"");
     let bashIndex = data.indexOf('bash-3.2$'); // specifc to macbook
