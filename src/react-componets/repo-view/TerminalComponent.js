@@ -22,20 +22,17 @@ function TerminalComponent({ repoPath }) {
     console.log(terminalLineData);
     ipcRenderer.send('terminal.keystroke', terminalInput);
     ipcRenderer.send('terminal.keystroke', '\n');
-    createlistener();
   };
 
-  let createlistener = () =>{
-    if(needListener){
-      ipcRenderer.on('terminal.incomingData', (event, data) => {
-        console.log(data);
-        validateData(data)
-        needListener = !needListener;
-      })
-    }
-  }
 
   useEffect(() => {
+    let listener = ipcRenderer.rawListeners('terminal.incomingData').length
+    if(listener == 0){
+      ipcRenderer.on('terminal.incomingData', (event, data) => {
+        console.log(data, listener);
+        validateData(data)
+      })
+    }
     onDataEntry(`cd ${repoPath}`);
     onDataEntry(`git status`);
   }, []);
@@ -44,6 +41,9 @@ function TerminalComponent({ repoPath }) {
 
   let validateData = (data) => {
     console.log(ipcRenderer.rawListeners('terminal.incomingData').length)
+    data = data.replace("[32m", "\n");
+    data = data.replace("[m", "\n");
+    data = data.replace(RegExp(String.fromCharCode(32)),"");
     let bashIndex = data.indexOf('bash-3.2$'); // specifc to macbook
     if (bashIndex == -1) {
       let dataLines = data.split('\n');

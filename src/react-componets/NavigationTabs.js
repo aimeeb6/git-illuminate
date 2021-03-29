@@ -96,7 +96,7 @@ export default function ScrollableTabsButtonAuto() {
   
   return (
     <div className={classes.root}>
-      <AppBar position="sticky" color="default" className={classes.appBar}>
+      <AppBar position="static" color="default" className={classes.appBar}>
         <Tabs
           value={value}
           onChange={handleChange}

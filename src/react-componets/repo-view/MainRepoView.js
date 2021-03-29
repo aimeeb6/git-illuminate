@@ -54,7 +54,7 @@ function MainRepoView({ repoPath }) {
     overflow: 'auto',
     flexDirection:'column',
     height:"90vh",
-    paddingTop:90,
+    paddingTop:130,
     }}>
 
       <div style={centerStyles} id="commit-graph-div">

@@ -62,7 +62,7 @@ var shell = os.platform() === "win32" ? "powershell.exe" : "bash";
    mainWindow = new BrowserWindow({
      show: false,
      width: 1024,
-     height: 728,
+     height: 875,
      icon: getAssetPath('icon.png'),
      webPreferences: {
        nodeIntegration: true,
