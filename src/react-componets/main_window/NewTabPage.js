@@ -13,11 +13,10 @@ function NewTab({setTabs, openTabs}){
         //getRepoDir(currentWindow, true );
         ipcRenderer.send('openFile', true);
     }
-
-    ipcRenderer.on('repo-opened', (event , folderPath) => {
-        createNewTab(folderPath);
-    });
-
+        ipcRenderer.on('repo-opened', (event , folderPath) => {
+            createNewTab(folderPath);
+        });
+    
     let createNewTab = (folderPath) => {
         let newRepo = {
           name: folderPath.substring(folderPath.lastIndexOf("/") + 1),
