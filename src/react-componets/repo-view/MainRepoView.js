@@ -46,13 +46,15 @@ function MainRepoView({ repoPath }) {
   };
 
   return (
-    <div 
+    <div id="main-repo-view-div"
     style={{
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'none',
-    flexDirection:'column'
+    overflow: 'auto',
+    flexDirection:'column',
+    height:"90vh",
+    paddingTop:90,
     }}>
 
       <div style={centerStyles} id="commit-graph-div">

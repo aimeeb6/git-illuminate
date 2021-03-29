@@ -83,7 +83,7 @@ class GitGraphWidget extends React.Component {
     if(this.state.commitsArray.length > 0){
 
     return (
-      <TableContainer style={{ maxHeight: 550, maxWidth: 700, minWidth:700, minHeight:550, position:"relative", paddingRight:50 }} component={Paper}>
+      <TableContainer style={{ maxHeight: 520, maxWidth: 700, minWidth:700, minHeight:520, position:"relative", paddingRight:50 }} component={Paper}>
         <div id="gitGraphContainer" style={this.state.status.length > 0 ? {marginTop: "12%", paddingLeft:0} : {marginTop: "8%", paddingLeft:0}}>
 
         <Gitgraph style={{}}  options={{ 

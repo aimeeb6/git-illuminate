@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 
 let HeadingStyle = {backgroundColor: '#16161F', paddingTop: 10, paddingBottom: 10, marginBottom:0, textAlign:"center"}
 let StagingFileStyle = {backgroundColor: '#696969', paddingTop:5, maxHeight: 140, minHeight: 140, overflow:"auto", marginTop:0, fontSize:14}
-let CommitBoxStyle = {borderStyle:"solid", borderColor:"black", borderWidth:1, backgroundColor: '#696969',  paddingTop:5, marginBottom:20, maxHeight: 130, minHeight: 130, overflow:"none", marginTop:0}
+let CommitBoxStyle = {borderStyle:"solid", borderColor:"black", borderWidth:1, backgroundColor: '#696969',  paddingTop:5, marginBottom:20, maxHeight: 110, minHeight: 110, overflow:"none", marginTop:0}
 
 function StagingBox({title, files}){
 
