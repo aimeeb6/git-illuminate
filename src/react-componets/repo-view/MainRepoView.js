@@ -28,30 +28,47 @@ function MainRepoView({ repoPath }) {
   const [currentCommand, setCommand] = useState('');
 
   function RepoButtonPress(gitcommand){
+    console.log(gitcommand);
+    if(gitcommand == 'Stage All'){
+      setCommand(' add .')
+      return;
+    }
+    
     if(gitcommand == 'fetch'){
       setCommand(' fetch --all')
+      return;
     }
 
     if(gitcommand == 'pull'){
       setCommand(' pull')
+      return;
     }
 
     if(gitcommand == 'push'){
       setCommand(' push')
+      return;
     }
 
     if(gitcommand == 'stash'){
       setCommand(' stash')
-    }
-
-    if(gitcommand == 'Stage All'){
-      setCommand(' add .')
+      return;
     }
 
     if(gitcommand == 'Unstage All'){
       setCommand(' reset')
+      return;
     }
-    console.log(gitcommand);
+
+    if(gitcommand[1]){
+      console.log(gitcommand)
+      if(!gitcommand[2]){
+        setCommand(` commit -m "${gitcommand[1]}"`)
+        return;
+      }else{
+        setCommand(` commit -m "${gitcommand[1]}" -m "${gitcommand[2]}"`)
+        return;
+      }
+    }
   }
 
   function updateRepoView() {

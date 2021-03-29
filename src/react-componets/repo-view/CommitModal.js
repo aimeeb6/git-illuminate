@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
@@ -22,7 +22,7 @@ function StagingBox({title, files, buttonTitle, buttonFunction}){
     )
 }
 
-function CommitMessage(){
+function CommitMessage({buttonFunction}){
     const styles = {
         container: {
             display: 'flex',
@@ -37,15 +37,16 @@ function CommitMessage(){
           fontSize:50
         },
         }
+
     return(
         <div>
             <div style={CommitBoxStyle}>
-                <input id="commit-message" maxLength="70" placeholder="Commit Message" 
-                style={{fontSize: 18, width:"100%", border:"none", fontWeight: 15, outline:"none", color:'black', backgroundColor:"#696969", paddingLeft:7, paddingBottom:5}}/>
+                <input id="commit-message" maxLength="70" placeholder="Commit Message"
+                style={{fontSize: 18, width:"100%", border:"none", fontWeight: 15, outline:"none", color:'white', backgroundColor:"#696969", paddingLeft:7, paddingBottom:5}}/>
                 <textarea id="commit-description" placeholder="Commit Description" 
-                style={{fontSize: 15,width:"100%", height:"110px", overflow:"auto", resize: "none", fontFamily:"Arial", border:"none", paddingLeft:7, fontWeight: 15, outline:"none", color:'black', backgroundColor:"#696969", paddingLeft:5}}/>
+                style={{fontSize: 15,width:"100%", height:"110px", overflow:"auto", resize: "none", fontFamily:"Arial", border:"none", paddingLeft:7, fontWeight: 15, outline:"none", color:'white', backgroundColor:"#696969", paddingLeft:5}}/>
             </div>
-            <Button style={{width:"100%"}} variant="contained" color="primary"> Commit </Button>
+            <Button onClick={()=> buttonFunction(['commit', document.getElementById('commit-message').value, document.getElementById('commit-description').value]) } style={{width:"100%"}} variant="contained" color="primary"> Commit </Button>
         </div>
     )
 }
@@ -57,7 +58,7 @@ function CommitModal({status, ButtonPress}){
         <div style={{width:"100%"}}>
             <StagingBox title="Unstaged Changes" files={unStagedFiles} buttonFunction={ButtonPress} buttonTitle="Stage All"/>
             <StagingBox title="Staged Changes"  files={stagedFiles} buttonFunction={ButtonPress} buttonTitle="Unstage All" />
-            <CommitMessage/>
+            <CommitMessage buttonFunction={ButtonPress}/>
         </div>
     )
 }
