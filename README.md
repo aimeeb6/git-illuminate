@@ -1,6 +1,5 @@
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/3GlczqrRBHw![image](https://user-images.githubusercontent.com/56455547/117673609-d74e8e00-b1a2-11eb-9467-f5f2a0a75b05.png)
-/0.jpg)](http://www.youtube.com/watch?v=3GlczqrRBHw![image](https://user-images.githubusercontent.com/56455547/117673645-dddd0580-b1a2-11eb-97f1-ece08f1b5672.png)
- "Git Interface walkthrough")
+
+ [![Git Interface walkthrough](https://img.youtube.com/vi/3GlczqrRBHw!/0.jpg)](https://www.youtube.com/watch?v=3GlczqrRBHw! "Git Interface walkthrough")
 
 # Instructions to Run Application 
 1.	Install node.js from https://nodejs.org/en/
